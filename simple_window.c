@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:23:53 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/05/16 22:30:29 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:51:43 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,20 @@ void key_hook(mlx_key_data_t keydata, void *param)
         }
 
         // Ensure character stays within window boundaries
-        if (new_x >= 0 && new_x <= WIDTH - character->image->width)
+        if (new_x >= 0 && new_x <= WIDTH - character->image->width &&
+            new_y >= 0 && new_y <= HEIGHT - character->image->height)
         {
-            character->x = new_x;
-        }
-        if (new_y >= 0 && new_y <= HEIGHT - character->image->height)
-        {
-            character->y = new_y;
-        }
+            // Delete the previous image
+            mlx_delete_image(character->mlx, character->image);
 
-        // Move the character to the new position
-        mlx_image_to_window(character->mlx, character->image, character->x, character->y);
+            // Update character's coordinates
+            character->x = new_x;
+            character->y = new_y;
+
+            // Re-create the character image at the new position
+            character->image = mlx_texture_to_image(character->mlx, mlx_load_png("idle.png"));
+            mlx_image_to_window(character->mlx, character->image, character->x, character->y);
+        }
     }
 }
 
