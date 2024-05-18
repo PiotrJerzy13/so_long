@@ -8,13 +8,14 @@ CFLAGS = -I./include
 LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm
 
 # Source files
-SOURCES = simple_window.c
+SOURCES = main.c init.c render.c game.c cleanup.c
 
 # Object files (same as source files but with .o extension)
 OBJECTS = $(SOURCES:.c=.o)
+DEPS = game.h
 
 # Executable name
-EXECUTABLE = simple_window
+EXECUTABLE = game
 
 # Default target
 all: $(EXECUTABLE)
