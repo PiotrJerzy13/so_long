@@ -6,11 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:35:21 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/05/18 19:35:30 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:16:39 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "game.h"
+#include "so_long.h"
 #include <stdio.h>
 
 void key_hook(mlx_key_data_t keydata, void *param)
