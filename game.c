@@ -6,81 +6,118 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:35:21 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/16 14:16:39 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:23:16 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h>
 
-void key_hook(mlx_key_data_t keydata, void *param)
+void	check_exit_reached(t_GameData *data)
 {
-    GameData *data = (GameData *)param;
-    Character *character = &data->character;
-    Coin *coin = &data->coin;
-    Exit *exit = &data->exit;
+	t_Character	*character;
+	t_Exit		*exit;
 
-    if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-    {
-        mlx_close_window(character->mlx);
-    }
-    else if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
-    {
-        int new_x = character->x;
-        int new_y = character->y;
+	character = &data->character;
+	exit = &data->exit;
+	if (exit->opened && character->x < exit->x + exit->image->width
+		&& character->x + character->image->width > exit->x
+		&& character->y < exit->y + exit->image->height
+		&& character->y + character->image->height > exit->y)
+	{
+		printf("CONGLATURATION.\n");
+		printf("A WINNER IS YOU.\n");
+		mlx_close_window(character->mlx);
+	}
+}
 
-        switch (keydata.key)
-        {
-            case MLX_KEY_LEFT:
-                new_x -= CHARACTER_SPEED;
-                break;
-            case MLX_KEY_RIGHT:
-                new_x += CHARACTER_SPEED;
-                break;
-            case MLX_KEY_UP:
-                new_y -= CHARACTER_SPEED;
-                break;
-            case MLX_KEY_DOWN:
-                new_y += CHARACTER_SPEED;
-                break;
-            default:
-                break;
-        }
+void	update_position(int key, int *new_col, int *new_row)
+{
+	if (key == MLX_KEY_LEFT)
+		(*new_col)--;
+	else if (key == MLX_KEY_RIGHT)
+		(*new_col)++;
+	else if (key == MLX_KEY_UP)
+		(*new_row)--;
+	else if (key == MLX_KEY_DOWN)
+		(*new_row)++;
+}
 
-        if (new_x >= BLOCK_SIZE && new_x <= WIDTH - character->image->width - BLOCK_SIZE &&
-            new_y >= BLOCK_SIZE && new_y <= HEIGHT - character->image->height - BLOCK_SIZE)
-        {
-            mlx_delete_image(character->mlx, character->image);
-            character->x = new_x;
-            character->y = new_y;
-            character->image = mlx_texture_to_image(character->mlx, mlx_load_png("idle.png"));
-            mlx_image_to_window(character->mlx, character->image, character->x, character->y);
+void	handle_movement(t_GameData *data, int new_col,
+		int new_row, int block_size)
+{
+	t_Character		*character;
+	t_Exit			*exit;
+	mlx_texture_t	*texture;
 
-            if (!coin->collected &&
-                character->x < coin->x + coin->image->width &&
-                character->x + character->image->width > coin->x &&
-                character->y < coin->y + coin->image->height &&
-                character->y + character->image->height > coin->y)
-            {
-                mlx_delete_image(character->mlx, coin->image);
-                coin->collected = 1;
+	character = &data->character;
+	exit = &data->exit;
+	if (can_move_to(data->map, new_col, new_row, exit->opened))
+	{
+		character->x = new_col * block_size;
+		character->y = new_row * block_size;
+		data->move_count++;
+		if (character->image)
+		{
+			mlx_delete_image(character->mlx, character->image);
+		}
+		texture = mlx_load_png("text/idle.png");
+		character->image = mlx_texture_to_image(character->mlx, texture);
+		if (character->image)
+		{
+			mlx_image_to_window(character->mlx,
+				character->image, character->x, character->y);
+		}
+	}
+}
 
-                mlx_delete_image(character->mlx, exit->image);
-                exit->image = mlx_texture_to_image(character->mlx, mlx_load_png("exit_open.png"));
-                mlx_image_to_window(character->mlx, exit->image, exit->x, exit->y);
-                exit->opened = 1;
-            }
+t_Position	find_element(char **map, char element, int height, int width)
+{
+	t_Position	pos;
+	int			row;
+	int			col;
 
-            if (exit->opened &&
-                character->x < exit->x + exit->image->width &&
-                character->x + character->image->width > exit->x &&
-                character->y < exit->y + exit->image->height &&
-                character->y + character->image->height > exit->y)
-            {
-                printf("CONGLATURATION.\n");
-                printf("A WINNER IS YOU.\n");
-                mlx_close_window(character->mlx);
-            }
-        }
-    }
+	pos.row = -1;
+	pos.col = -1;
+	row = 0;
+	while (row < height)
+	{
+		col = 0;
+		while (col < width)
+		{
+			if (map[row][col] == element)
+			{
+				pos.row = row;
+				pos.col = col;
+				return (pos);
+			}
+			col++;
+		}
+		row++;
+	}
+	return (pos);
+}
+
+void	key_hook(mlx_key_data_t keydata, void *param)
+{
+	t_GameData	*data;
+	t_Character	*character;
+	int			new_col;
+	int			new_row;
+
+	data = (t_GameData *)param;
+	character = &data->character;
+	new_col = character->x / BLOCK_SIZE;
+	new_row = character->y / BLOCK_SIZE;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	{
+		mlx_close_window(character->mlx);
+	}
+	else if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
+	{
+		update_position(keydata.key, &new_col, &new_row);
+		handle_movement(data, new_col, new_row, BLOCK_SIZE);
+		printf("Moves: %d\n", data->move_count);
+		check_coin_collection(data, BLOCK_SIZE);
+		check_exit_reached(data);
+	}
 }
