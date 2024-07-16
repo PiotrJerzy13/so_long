@@ -2,7 +2,7 @@
 #ifndef SO_LONG_H
 #define SO_LONG_H
 
-#include <MLX42/MLX42.h>
+# include "MLX42/MLX42.h"
 # include <stdlib.h>
 # include "get_next_line.h"
 # include <fcntl.h>
@@ -94,52 +94,57 @@ typedef struct s_map_data
 mlx_t			*initialize_window(int width, int height, const char *title);
 mlx_texture_t	*load_texture(const char *path);
 mlx_image_t		*create_image(mlx_t *mlx, mlx_texture_t *texture);
-#define WIDTH 800
-#define HEIGHT 600
-#define BLOCK_SIZE 32
-#define CHARACTER_SPEED 10
-
-typedef struct {
-    int x;
-    int y;
-    mlx_image_t *image;
-    int opened;
-} Exit;
-
-typedef struct {
-    int x;
-    int y;
-    mlx_image_t *image;
-    mlx_t *mlx;
-} Character;
-
-typedef struct {
-    int x;
-    int y;
-    mlx_image_t *image;
-    int collected;
-} Coin;
-
-typedef struct {
-    Character character;
-    Coin coin;
-    Exit exit;
-} GameData;
-
-// init.c
-mlx_t* initialize_window(int width, int height, const char *title);
-mlx_texture_t* load_texture(const char *path);
-mlx_image_t* create_image(mlx_t *mlx, mlx_texture_t *texture);
-GameData initialize_game_data(mlx_t *mlx);
 
 // render.c
-void render_background_and_walls(mlx_t *mlx, mlx_image_t *background_images[], mlx_image_t *block_img);
-void render_game_objects(mlx_t *mlx, GameData *data);
+void			render_background_and_walls(mlx_t *mlx,
+					mlx_image_t *background_img,
+					mlx_image_t *block_img, t_map *map);
+
+void			render_game_objects(mlx_t *mlx, t_GameData *data);
+void			calculate_map_dimensions(t_map *map);
 
 // game.c
-void key_hook(mlx_key_data_t keydata, void *param);
+void			key_hook(mlx_key_data_t keydata, void *param);
 
 // cleanup.c
-void cleanup(mlx_t *mlx, mlx_texture_t *textures[], int texture_count, mlx_image_t *images[], int image_count);
+void			cleanup(mlx_t *mlx, t_Resources *res);
+void			count_map_elements(char *line, t_map *map);
+void			validate_elements(t_map *map);
+void			validate_map_walls(t_map *map);
 
-#endif // GAME_H
+// error.c
+void			detailed_error(int code);
+void			general_error(int code);
+void			ft_error(int code, t_map *map);
+
+// image_block_gen.c
+void			initialize_image_map(t_map *map);
+void			initialize_background_map(t_map *map);
+
+// map.c
+int				can_move_to(t_map *map, int col, int row, int exit_opened);
+
+// map_check.c
+void			validate_file_extension(t_map *map);
+void			process_map(t_map *map);
+void			validate_walls(char *line, t_map *map);
+int				ft_strlen(const char *str);
+
+int				all_coins_collected(t_GameData *data);
+t_Position		find_element(char **map, char element, int height, int width);
+int				has_valid_extension(const char *path, const char *extension);
+int				all_coins_collected(t_GameData *data);
+void			initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y);
+void			iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map);
+void			init_char_and_exit(mlx_t *mlx,
+					t_GameData *data, t_map *map, int block_size);
+void			validate_element_counts(int player_count,
+					int exit_count, int coin_count, t_map *map);
+void			validate_map_content(t_map *map);
+void			validate_map_size(t_map *map);
+t_GameData		initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res);
+void			check_coin_collection(t_GameData *data, int block_size);
+void			validate_args_and_load_map(int argc, char **argv, t_map *map);
+int				load_map(t_map *map, char *file_path);
+
+#endif 
