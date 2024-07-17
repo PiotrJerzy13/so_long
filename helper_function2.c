@@ -6,12 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/16 15:31:01 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/17 10:40:45 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 void	allocate_and_initialize_coins(mlx_t *mlx, t_GameData *data, t_map *map)
 {
@@ -45,4 +44,58 @@ t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
 	allocate_and_initialize_coins(mlx, &data, map);
 	iterate_and_populate(mlx, &data, map);
 	return (data);
+}
+
+void	flood_fill(int row, int col, t_map_data *map_data)
+{
+	if (map_data->map[row][col] != '1' && map_data->map[row][col] != 'F')
+	{
+		map_data->map[row][col] = 'F';
+		if (row > 0)
+			flood_fill(row - 1, col, map_data);
+		if (row < map_data->height - 1)
+			flood_fill(row + 1, col, map_data);
+		if (col > 0)
+			flood_fill(row, col - 1, map_data);
+		if (col < map_data->width - 1)
+			flood_fill(row, col + 1, map_data);
+	}
+}
+
+void	map_flood_fill(t_map_data *map_data)
+{
+	int	row;
+	int	col;
+
+	row = 0;
+	while (row < map_data-> height)
+	{
+		col = 0;
+		while (col < map_data->width)
+		{
+			if (map_data->map[row][col] == 'P')
+			{
+				flood_fill(row, col, map_data);
+			}
+			col++;
+		}
+		row++;
+	}
+}
+
+void	check_map_borders(t_map *game_map)
+{
+	int	col;
+
+	col = 0;
+	while (col < game_map->width)
+	{
+		if (game_map->map[0][col] != '1')
+		{
+			printf("Map Error: The top wall of the map is incomplete!\n");
+			exit(EXIT_FAILURE);
+			break ;
+		}
+		col++;
+	}
 }

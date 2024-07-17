@@ -1,18 +1,17 @@
+
 # Compiler
 CC = gcc
 
 # Compiler flags
 CFLAGS = -I./include
 
-# Linker flags
+# Linker flags (ensure paths to libglfw and libmlx42 are correct)
 LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm
 
 # Source files
-SOURCES = main.c init.c render.c game.c cleanup.c
-
+SOURCES = main.c init.c render.c game.c cleanup.c map_check.c image_block_gen.c error.c ft_strlen.c get_next_line.c get_next_line_utis.c helper_function.c helper_function2.c
 # Object files (same as source files but with .o extension)
 OBJECTS = $(SOURCES:.c=.o)
-DEPS = game.h
 
 # Executable name
 EXECUTABLE = game

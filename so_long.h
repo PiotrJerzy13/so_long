@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
+/*   Updated: 2024/07/17 11:29:08 by pwojnaro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef SO_LONG_H
-#define SO_LONG_H
+# define SO_LONG_H
 
 # include "MLX42/MLX42.h"
 # include <stdlib.h>
@@ -8,6 +19,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
+# include "get_next_line.h"
 
 # define BLOCK_SIZE 32
 # define FIXED_WINDOW_WIDTH 800
