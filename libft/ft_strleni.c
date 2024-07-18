@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strleni.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 14:10:45 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 19:00:25 by pwojnaro         ###   ########.fr       */
+/*   Created: 2024/07/18 21:30:11 by pwojnaro          #+#    #+#             */
+/*   Updated: 2024/07/18 21:30:33 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	ft_strleni(const char *str)
+{
+	int	length;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-
-char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
-int		ft_strleni(const char *str);
-char	*ft_strchr(const char *s, int c);
-void	*ft_calloc(size_t count, size_t size);
-
-#endif
+	length = 0;
+	while (str[length])
+		length++;
+	return (length);
+}

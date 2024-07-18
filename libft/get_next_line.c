@@ -6,11 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:10:01 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 18:59:33 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:44:49 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 char	*read_and_store(int fd, int *bytes_read, char *line)
 {

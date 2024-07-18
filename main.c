@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 20:14:22 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:16:38 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ mlx_t	*initialize_window(int width, int height, const char *title)
 	mlx = mlx_init(width, height, title, true);
 	if (!mlx)
 	{
-		fprintf(stderr, "Failed to initialize window\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to initialize window\n");
+		exit(1);
 	}
 	return (mlx);
 }
@@ -49,14 +49,14 @@ void	setup_game(t_map *map, mlx_t *mlx, t_Resources *res)
 	block_tex = load_texture("text/block1.png");
 	if (!block_tex)
 	{
-		fprintf(stderr, "Failed to load block texture\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to load block texture\n");
+		exit(1);
 	}
 	res->block_img = create_image(mlx, block_tex);
 	if (!res->block_img)
 	{
-		fprintf(stderr, "Failed to create block image\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to create block image\n");
+		exit(1);
 	}
 	render_background_and_walls(mlx, res->images[0], res->block_img, map);
 	free(block_tex);
@@ -69,7 +69,7 @@ int	load_map(t_map *map, char *file_path)
 	len = ft_strlen(file_path);
 	if (len < 4 || strcmp(file_path + len - 4, ".ber") != 0)
 	{
-		fprintf(stderr, "Error: Map file must have a .ber extension\n");
+		ft_printf("Error: Map file must have a .ber extension\n");
 		return (-1);
 	}
 	map->path = file_path;
@@ -89,8 +89,8 @@ int	main(int argc, char **argv)
 	mlx = initialize_window(FIXED_WINDOW_WIDTH, FIXED_WINDOW_HEIGHT, "Window");
 	if (!mlx)
 	{
-		fprintf(stderr, "Error: Initialization failed!\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Error: Initialization failed!\n");
+		exit(1);
 	}
 	load_resources(&res, mlx);
 	setup_game(&map, mlx, &res);
@@ -103,5 +103,5 @@ int	main(int argc, char **argv)
 	cleanup(mlx, &res);
 	free(res.textures);
 	free(res.images);
-	return (EXIT_SUCCESS);
+	return (0);
 }

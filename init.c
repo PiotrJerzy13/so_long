@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:36:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 19:24:54 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:17:05 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ mlx_texture_t	*load_texture(const char *path)
 	texture = mlx_load_png(path);
 	if (!texture)
 	{
-		fprintf(stderr, "Failed to load texture: %s\n", path);
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to load texture: %s\n", path);
+		exit(1);
 	}
 	return (texture);
 }
@@ -32,8 +32,8 @@ mlx_image_t	*create_image(mlx_t *mlx, mlx_texture_t *texture)
 	image = mlx_texture_to_image(mlx, texture);
 	if (!image)
 	{
-		fprintf(stderr, "Failed to convert texture to image\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to convert texture to image\n");
+		exit(1);
 	}
 	return (image);
 }
@@ -49,14 +49,14 @@ void	init_char_and_exit(mlx_t *mlx,
 	data->character.image = create_image(mlx, load_texture("text/idle.png"));
 	if (!data->character.image)
 	{
-		fprintf(stderr, "Failed to load character image\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to load character image\n");
+		exit(1);
 	}
 	data->exit.image = create_image(mlx, load_texture("text/exit_open.png"));
 	if (!data->exit.image)
 	{
-		fprintf(stderr, "Failed to load exit image\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to load exit image\n");
+		exit(1);
 	}
 	data->character.mlx = mlx;
 	data->character.x = player_pos.col * BLOCK_SIZE;

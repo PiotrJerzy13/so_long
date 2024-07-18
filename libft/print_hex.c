@@ -6,11 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:13:36 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/03/22 10:51:48 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:02:00 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 int	print_hex(unsigned long number, int upper, int fd)
 {

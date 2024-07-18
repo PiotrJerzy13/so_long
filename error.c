@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:37:09 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 18:36:39 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:19:15 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ft_error(int code, t_map *map)
 {
-	if (code == -12)
+	if (code == -2)
 	{
 		ft_printf("Memory allocation did not work!\n");
 	}
-	exit(EXIT_FAILURE);
+	exit(1);
 }
 
 void	validate_top_walls(char *line, int num_columns, int is_top)
@@ -38,7 +38,7 @@ void	validate_top_walls(char *line, int num_columns, int is_top)
 			{
 				ft_printf("Map Error: The bottom wall is incomplete!\n");
 			}
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 		index++;
 	}
@@ -48,8 +48,8 @@ void	validate_side_walls(char *line, int num_columns)
 {
 	if (line[0] != '1' || line[num_columns - 1] != '1')
 	{
-		ft_printf("Map Error: The side walls of the map are incomplete!\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Error: The side walls of the map are incomplete!\n");
+		exit(1);
 	}
 }
 

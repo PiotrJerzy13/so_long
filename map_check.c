@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 18:41:49 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:15:57 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	read_lines(t_map *map)
 		{
 			ft_printf("Error: The map is not rectangular!\n");
 			free(line);
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 		map->map = (char **)realloc(map->map,
 				(map->current_row + 1) * sizeof(char *));
@@ -105,7 +105,7 @@ void	process_map(t_map *map)
 	if (!line)
 	{
 		ft_printf("Error: The map data is empty!\n");
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	line[ft_strlen(line) - 1] = '\0';
 	map->num_columns = ft_strlen(line);

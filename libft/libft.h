@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:35:20 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 20:16:32 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:57:06 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 # include <stdlib.h>
 # include <string.h>
 # include <limits.h>
-# include "ft_printf.h"
+# include <stdarg.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
@@ -73,5 +77,10 @@ t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
 
 char	*ft_utoa_base(unsigned long value, char *base);
+char	*get_next_line(int fd);
+int		ft_strleni(const char *str);
+int		ft_printf(const char *format_str, ...);
+int		ft_putunsignednbr_fd(unsigned int n, int fd);
+int		print_hex(unsigned long number, int upper, int fd);
 
 #endif

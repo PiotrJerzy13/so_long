@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 19:26:19 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:18:16 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void	initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
 	coin->image = create_image(mlx, load_texture("text/coin.png"));
 	if (!coin->image)
 	{
-		fprintf(stderr, "Failed to load coin image\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to load coin image\n");
+		exit(1);
 	}
 	coin->x = x;
 	coin->y = y;

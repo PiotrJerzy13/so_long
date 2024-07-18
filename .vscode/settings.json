@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"mlx42.h": "c"
+		"mlx42.h": "c",
+		"get_next_line.h": "c",
+		"stdlib.h": "c"
 	}
 }

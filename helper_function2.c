@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 19:27:37 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:18:09 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	allocate_and_initialize_coins(mlx_t *mlx, t_GameData *data, t_map *map)
 	data->coins = (t_Coin *)calloc(data->coin_count, sizeof(t_Coin));
 	if (!data->coins)
 	{
-		fprintf(stderr, "Failed to allocate memory for coins.\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Failed to allocate memory for coins.\n");
+		exit(1);
 	}
 }
 
@@ -93,7 +93,7 @@ void	check_map_borders(t_map *game_map)
 		if (game_map->map[0][col] != '1')
 		{
 			ft_printf("Error: The top wall of the map is incomplete!\n");
-			exit(EXIT_FAILURE);
+			exit(1);
 			break ;
 		}
 		col++;

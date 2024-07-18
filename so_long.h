@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 20:12:03 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:15:21 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define SO_LONG_H
 
 # include "MLX42/MLX42.h"
-# include <stdlib.h>
-# include "get_next_line.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
@@ -125,8 +123,6 @@ void			validate_elements(t_map *map);
 void			validate_map_walls(t_map *map);
 
 // error.c
-void			detailed_error(int code);
-void			general_error(int code);
 void			ft_error(int code, t_map *map);
 
 // image_block_gen.c
@@ -140,7 +136,6 @@ int				can_move_to(t_map *map, int col, int row, int exit_opened);
 void			validate_file_extension(t_map *map);
 void			process_map(t_map *map);
 void			validate_walls(char *line, t_map *map);
-int				ft_strleni(const char *str);
 
 int				all_coins_collected(t_GameData *data);
 t_Position		find_element(char **map, char element, int height, int width);
@@ -150,10 +145,6 @@ void			initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y);
 void			iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map);
 void			init_char_and_exit(mlx_t *mlx,
 					t_GameData *data, t_map *map, int block_size);
-void			validate_element_counts(int player_count,
-					int exit_count, int coin_count, t_map *map);
-void			validate_map_content(t_map *map);
-void			validate_map_size(t_map *map);
 t_GameData		initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res);
 void			check_coin_collection(t_GameData *data, int block_size);
 void			validate_args_and_load_map(int argc, char **argv, t_map *map);

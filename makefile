@@ -8,7 +8,7 @@ CFLAGS = -I./include -I./libft
 LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm -L./libft -lft
 
 # Source files
-SOURCES = main.c init.c render.c game.c cleanup.c map_check.c image_block_gen.c error.c get_next_line.c get_next_line_utis.c helper_function.c helper_function2.c
+SOURCES = main.c init.c render.c game.c cleanup.c map_check.c image_block_gen.c error.c helper_function.c helper_function2.c
 
 # Object files (same as source files but with .o extension)
 OBJECTS = $(SOURCES:.c=.o)
