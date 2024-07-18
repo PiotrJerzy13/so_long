@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/17 11:27:34 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:41:49 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	read_map_lines(t_map *map)
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strlen(line) != map->num_columns)
 		{
-			printf("Error: The map is not rectangular!\n");
+			ft_printf("Error: The map is not rectangular!\n");
 			free(line);
 			exit(EXIT_FAILURE);
 		}
@@ -85,7 +85,7 @@ void	read_lines(t_map *map)
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strlen(line) != map->num_columns)
 		{
-			printf("Map Error: The map is not rectangular!\n");
+			ft_printf("Error: The map is not rectangular!\n");
 			free(line);
 			exit(EXIT_FAILURE);
 		}
@@ -104,7 +104,7 @@ void	process_map(t_map *map)
 	line = get_next_line(map->fd);
 	if (!line)
 	{
-		printf("Error: The map data is empty!\n");
+		ft_printf("Error: The map data is empty!\n");
 		exit(EXIT_FAILURE);
 	}
 	line[ft_strlen(line) - 1] = '\0';

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/17 11:29:08 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:12:03 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <string.h>
-# include "get_next_line.h"
+# include "libft/libft.h"
 
 # define BLOCK_SIZE 32
 # define FIXED_WINDOW_WIDTH 800
@@ -140,7 +140,7 @@ int				can_move_to(t_map *map, int col, int row, int exit_opened);
 void			validate_file_extension(t_map *map);
 void			process_map(t_map *map);
 void			validate_walls(char *line, t_map *map);
-int				ft_strlen(const char *str);
+int				ft_strleni(const char *str);
 
 int				all_coins_collected(t_GameData *data);
 t_Position		find_element(char **map, char element, int height, int width);

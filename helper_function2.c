@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/17 10:40:45 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:27:37 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	check_map_borders(t_map *game_map)
 	{
 		if (game_map->map[0][col] != '1')
 		{
-			printf("Map Error: The top wall of the map is incomplete!\n");
+			ft_printf("Error: The top wall of the map is incomplete!\n");
 			exit(EXIT_FAILURE);
 			break ;
 		}

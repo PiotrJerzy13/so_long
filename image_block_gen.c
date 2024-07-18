@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/16 20:48:13 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:39:58 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	initialize_wall_map(t_map *map)
 			sizeof(mlx_image_t **));
 	if (!map->wall_map)
 	{
-		printf("Memory allocation did not work!\n");
+		ft_printf("Memory allocation did not work!\n");
 		exit(EXIT_FAILURE);
 	}
 	while (i < map->height)
@@ -59,7 +59,7 @@ void	initialize_wall_map(t_map *map)
 				sizeof(mlx_image_t *));
 		if (!map->wall_map[i])
 		{
-			printf("Memory allocation did not work!\n");
+			ft_printf("Memory allocation did not work!\n");
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -75,7 +75,7 @@ void	initialize_background_map(t_map *map)
 			sizeof(mlx_image_t **));
 	if (!map->background_map)
 	{
-		printf("Memory allocation did not work!\n");
+		ft_printf("Memory allocation did not work!\n");
 		exit(EXIT_FAILURE);
 	}
 	while (i < map->height)
@@ -84,7 +84,7 @@ void	initialize_background_map(t_map *map)
 				sizeof(mlx_image_t *));
 		if (!map->background_map[i])
 		{
-			printf("Memory allocation did not work!\n");
+			ft_printf("Memory allocation did not work!\n");
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -96,18 +96,18 @@ void	validate_args_and_load_map(int argc, char **argv, t_map *map)
 {
 	if (argc < 2)
 	{
-		printf("Missing map path argument !\n");
+		ft_printf("Missing map path argument !\n");
 		exit(EXIT_FAILURE);
 	}
 	else if (argc > 2)
 	{
-		printf("Too many arguments !\n");
+		ft_printf("Too many arguments !\n");
 		exit(EXIT_FAILURE);
 	}
 	*map = (t_map){0};
 	if (load_map(map, argv[1]) != 0)
 	{
-		printf("The map file name must end with *.ber!\n");
+		ft_printf("The map file name must end with *.ber!\n");
 		exit(EXIT_FAILURE);
 	}
 }

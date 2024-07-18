@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:51:03 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/17 10:39:27 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:14:53 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	calculate_map_dimensions(t_map *map)
 	fd = open(map->path, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("Error: Failed to access map data!\n");
+		fprintf(stderr, "Error: Failed to access map data!\n");
 		exit(EXIT_FAILURE);
 	}
 	while (line != NULL)

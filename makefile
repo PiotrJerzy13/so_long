@@ -1,15 +1,15 @@
-
 # Compiler
 CC = gcc
 
 # Compiler flags
-CFLAGS = -I./include
+CFLAGS = -I./include -I./libft
 
 # Linker flags (ensure paths to libglfw and libmlx42 are correct)
-LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm
+LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm -L./libft -lft
 
 # Source files
-SOURCES = main.c init.c render.c game.c cleanup.c map_check.c image_block_gen.c error.c ft_strlen.c get_next_line.c get_next_line_utis.c helper_function.c helper_function2.c
+SOURCES = main.c init.c render.c game.c cleanup.c map_check.c image_block_gen.c error.c get_next_line.c get_next_line_utis.c helper_function.c helper_function2.c
+
 # Object files (same as source files but with .o extension)
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -20,13 +20,24 @@ EXECUTABLE = so_long
 all: $(EXECUTABLE)
 
 # Rule to create the executable
-$(EXECUTABLE): $(OBJECTS)
+$(EXECUTABLE): $(OBJECTS) libft/libft.a
 	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
 # Rule to create object files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Ensure libft is built
+libft/libft.a:
+	make -C libft all
+
 # Clean up build files
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE)
+	make -C libft clean
+
+fclean: clean
+	rm -f $(EXECUTABLE)
+	make -C libft fclean
+
+re: fclean all

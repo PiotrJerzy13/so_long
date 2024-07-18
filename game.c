@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:35:21 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/16 14:23:16 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:37:39 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	check_exit_reached(t_GameData *data)
 		&& character->y < exit->y + exit->image->height
 		&& character->y + character->image->height > exit->y)
 	{
-		printf("CONGLATURATION.\n");
-		printf("A WINNER IS YOU.\n");
+		ft_printf("CONGLATURATION.\n");
+		ft_printf("A WINNER IS YOU.\n");
 		mlx_close_window(character->mlx);
 	}
 }
@@ -116,7 +116,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	{
 		update_position(keydata.key, &new_col, &new_row);
 		handle_movement(data, new_col, new_row, BLOCK_SIZE);
-		printf("Moves: %d\n", data->move_count);
+		ft_printf("Moves: %d\n", data->move_count);
 		check_coin_collection(data, BLOCK_SIZE);
 		check_exit_reached(data);
 	}
