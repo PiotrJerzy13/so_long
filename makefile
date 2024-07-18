@@ -14,7 +14,7 @@ SOURCES = main.c init.c render.c game.c cleanup.c map_check.c image_block_gen.c 
 OBJECTS = $(SOURCES:.c=.o)
 
 # Executable name
-EXECUTABLE = game
+EXECUTABLE = so_long
 
 # Default target
 all: $(EXECUTABLE)
