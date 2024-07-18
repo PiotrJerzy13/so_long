@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:18:09 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:31:42 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	allocate_and_initialize_coins(mlx_t *mlx, t_GameData *data, t_map *map)
 {
 	data->coin_count = map->c_num;
-	data->coins = (t_Coin *)calloc(data->coin_count, sizeof(t_Coin));
+	data->coins = (t_Coin *)ft_calloc(data->coin_count, sizeof(t_Coin));
 	if (!data->coins)
 	{
 		ft_printf("Failed to allocate memory for coins.\n");

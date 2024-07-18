@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:45 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:20:13 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:40:28 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	validate_file_extension(t_map *map)
 {
 	if (!has_valid_extension(map->path, ".ber"))
 	{
-		ft_printf("The map file name must end with *.ber!\n");
+		ft_printf("Error: The map file must end with *.ber!\n");
 		exit(1);
 	}
 	map->fd = open(map->path, O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 10:37:09 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:19:15 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:19:20 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 void	ft_error(int code, t_map *map)
 {
-	if (code == -2)
+	if (code == -1)
 	{
-		ft_printf("Memory allocation did not work!\n");
+		ft_printf("Error: The map is not rectangular!\n");
+	}
+	else if (code == -2)
+	{
+		ft_printf("Error: Memory allocation failed!\n");
 	}
 	exit(1);
 }

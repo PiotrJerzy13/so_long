@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:15:57 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:39:24 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,27 @@ void	read_map_lines(t_map *map)
 {
 	char	*line;
 
+	map->map = (char **)ft_calloc(1, sizeof(char *));
+	if (!map->map)
+		ft_error(-2, map);
 	line = get_next_line(map->fd);
-	map->map = (char **)calloc(1, sizeof(char *));
-	map->current_row = 0;
 	while (line)
 	{
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
 		if (ft_strlen(line) != map->num_columns)
 		{
-			ft_printf("Error: The map is not rectangular!\n");
 			free(line);
-			exit(EXIT_FAILURE);
+			ft_error(-1, map);
 		}
-		map->map = (char **)realloc(map->map,
+		map->map = (char **)ft_realloc(map->map,
+				(map->current_row) * sizeof(char *),
 				(map->current_row + 1) * sizeof(char *));
+		if (!map->map)
+			ft_error(-2, map);
 		map->map[map->current_row++] = line;
 		count_map_elements(line, map);
+		line = get_next_line(map->fd);
 	}
 	free(line);
 }
@@ -89,8 +93,14 @@ void	read_lines(t_map *map)
 			free(line);
 			exit(1);
 		}
-		map->map = (char **)realloc(map->map,
+		map->map = (char **)ft_realloc(map->map,
+				(map->current_row) * sizeof(char *),
 				(map->current_row + 1) * sizeof(char *));
+		if (!map->map)
+		{
+			ft_printf("Error: Memory allocation failed!\n");
+			exit(1);
+		}
 		map->map[map->current_row++] = line;
 		count_map_elements(line, map);
 		line = get_next_line(map->fd);
@@ -110,7 +120,7 @@ void	process_map(t_map *map)
 	line[ft_strlen(line) - 1] = '\0';
 	map->num_columns = ft_strlen(line);
 	map->current_row = 0;
-	map->map = (char **)calloc(1, sizeof(char *));
+	map->map = (char **)ft_calloc(1, sizeof(char *));
 	map->map[map->current_row++] = line;
 	count_map_elements(line, map);
 	read_lines(map);

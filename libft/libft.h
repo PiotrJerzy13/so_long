@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:35:20 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 21:57:06 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:08:03 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		ft_isprint(int c);
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t n);
+void	*ft_realloc(void *pointr, size_t original_size, size_t new_size);
 void	*ft_memchr(const void *str, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
@@ -82,5 +83,6 @@ int		ft_strleni(const char *str);
 int		ft_printf(const char *format_str, ...);
 int		ft_putunsignednbr_fd(unsigned int n, int fd);
 int		print_hex(unsigned long number, int upper, int fd);
+void	*ft_realloc(void *pointr, size_t original_size, size_t new_size);
 
 #endif

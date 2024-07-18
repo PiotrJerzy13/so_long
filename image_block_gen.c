@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:21:51 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 22:32:57 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ void	initialize_image_map(t_map *map)
 
 	r = 0;
 	c = 0;
-	map->img_map = (mlx_image_t ****) calloc(map->height,
+	map->img_map = (mlx_image_t ****) ft_calloc(map->height,
 			sizeof(mlx_image_t ***));
 	if (!map->img_map)
 		ft_error(-2, map);
 	while (r < map->height)
 	{
-		map->img_map[r] = (mlx_image_t ***) calloc(map->width,
+		map->img_map[r] = (mlx_image_t ***) ft_calloc(map->width,
 				sizeof(mlx_image_t **));
 		if (!map->img_map[r])
-			ft_error(-12, map);
+			ft_error(-2, map);
 		while (c < map->width)
 		{
-			map->img_map[r][c] = (mlx_image_t **) calloc(16,
+			map->img_map[r][c] = (mlx_image_t **) ft_calloc(16,
 					sizeof(mlx_image_t *));
 			if (!map->img_map[r][c])
 				ft_error(-2, map);
@@ -46,7 +46,7 @@ void	initialize_wall_map(t_map *map)
 	int	i;
 
 	i = 0;
-	map->wall_map = (mlx_image_t ***) calloc(map->height,
+	map->wall_map = (mlx_image_t ***) ft_calloc(map->height,
 			sizeof(mlx_image_t **));
 	if (!map->wall_map)
 	{
@@ -55,7 +55,7 @@ void	initialize_wall_map(t_map *map)
 	}
 	while (i < map->height)
 	{
-		map->wall_map[i] = (mlx_image_t **) calloc(map->width,
+		map->wall_map[i] = (mlx_image_t **) ft_calloc(map->width,
 				sizeof(mlx_image_t *));
 		if (!map->wall_map[i])
 		{
@@ -71,7 +71,7 @@ void	initialize_background_map(t_map *map)
 	int	i;
 
 	i = 0;
-	map->background_map = (mlx_image_t ***) calloc(map->height,
+	map->background_map = (mlx_image_t ***) ft_calloc(map->height,
 			sizeof(mlx_image_t **));
 	if (!map->background_map)
 	{
@@ -80,7 +80,7 @@ void	initialize_background_map(t_map *map)
 	}
 	while (i < map->height)
 	{
-		map->background_map[i] = (mlx_image_t **) calloc(map->width,
+		map->background_map[i] = (mlx_image_t **) ft_calloc(map->width,
 				sizeof(mlx_image_t *));
 		if (!map->background_map[i])
 		{

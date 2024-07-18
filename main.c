@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:16:38 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/18 23:38:30 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,6 @@ void	setup_game(t_map *map, mlx_t *mlx, t_Resources *res)
 
 int	load_map(t_map *map, char *file_path)
 {
-	size_t	len;
-
-	len = ft_strlen(file_path);
-	if (len < 4 || strcmp(file_path + len - 4, ".ber") != 0)
-	{
-		ft_printf("Error: Map file must have a .ber extension\n");
-		return (-1);
-	}
 	map->path = file_path;
 	validate_file_extension(map);
 	process_map(map);
