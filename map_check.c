@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 20:42:38 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:17:00 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,21 +123,4 @@ void	process_map(t_map *map)
 	validate_map_walls(map);
 	initialize_image_map(map);
 	initialize_background_map(map);
-}
-
-void	check_map_borders(t_map *game_map)
-{
-	int	col;
-
-	col = 0;
-	while (col < game_map->width)
-	{
-		if (game_map->map[0][col] != '1')
-		{
-			ft_printf("Error: The top wall of the map is incomplete!\n");
-			exit(1);
-			break ;
-		}
-		col++;
-	}
 }

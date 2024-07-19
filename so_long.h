@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 22:39:25 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:06:40 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "MLX42/MLX42.h"
 # include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
 # include "libft/libft.h"
 
 # define BLOCK_SIZE 32
