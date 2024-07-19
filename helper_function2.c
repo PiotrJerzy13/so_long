@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 12:01:05 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:33:01 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,43 +46,6 @@ t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
 	return (data);
 }
 
-void	flood_fill(int row, int col, t_map_data *map_data)
-{
-	if (map_data->map[row][col] != '1' && map_data->map[row][col] != 'F')
-	{
-		map_data->map[row][col] = 'F';
-		if (row > 0)
-			flood_fill(row - 1, col, map_data);
-		if (row < map_data->height - 1)
-			flood_fill(row + 1, col, map_data);
-		if (col > 0)
-			flood_fill(row, col - 1, map_data);
-		if (col < map_data->width - 1)
-			flood_fill(row, col + 1, map_data);
-	}
-}
-
-void	map_flood_fill(t_map_data *map_data)
-{
-	int	row;
-	int	col;
-
-	row = 0;
-	while (row < map_data-> height)
-	{
-		col = 0;
-		while (col < map_data->width)
-		{
-			if (map_data->map[row][col] == 'P')
-			{
-				flood_fill(row, col, map_data);
-			}
-			col++;
-		}
-		row++;
-	}
-}
-
 void	validate_file_extension(t_map *map)
 {
 	if (!has_valid_extension(map->path, ".ber"))
@@ -99,6 +62,42 @@ void	validate_file_extension(t_map *map)
 	else if (map->fd == 0)
 	{
 		ft_printf("Error: The map is empty!\n");
+		exit(1);
+	}
+}
+
+void	perform_flood_fill(t_map_data *map_data)
+{
+	int	row;
+	int	col;
+
+	row = 0;
+	map_data->reachable_coins = 0;
+	map_data->exit_reachable = 0;
+	while (row < map_data->height)
+	{
+		col = 0;
+		while (col < map_data->width)
+		{
+			if (map_data->map[row][col] == 'P')
+			{
+				flood_fill(row, col, map_data);
+				return ;
+			}
+			col++;
+		}
+		row++;
+	}
+}
+
+void	map_flood_fill(t_map_data *map_data)
+{
+	count_coins(map_data);
+	perform_flood_fill(map_data);
+	if (!(map_data->reachable_coins == map_data->total_coins
+			&& map_data->exit_reachable))
+	{
+		ft_printf("Map is invalid.\n");
 		exit(1);
 	}
 }

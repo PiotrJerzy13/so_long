@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 11:33:05 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:42:38 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,23 @@ void	count_map_elements(char *line, t_map *map)
 		if (*line == 'C')
 			map->c_num++;
 		else if (*line == 'P')
+		{
 			map->p_num++;
+			if (map->p_num > 1)
+				ft_error(-3, map);
+		}
 		else if (*line == 'E')
+		{
 			map->e_num++;
+			if (map->e_num > 1)
+				ft_error(-4, map);
+		}
 		else if (*line == '1')
 			map->w_num++;
+		else if (*line == '0')
+			;
+		else
+			ft_error(-5, map);
 		line++;
 	}
 }
@@ -107,6 +119,7 @@ void	process_map(t_map *map)
 	validate_elements(map);
 	map->height = map->current_row;
 	map->width = map->num_columns;
+	validate_walls(map);
 	validate_map_walls(map);
 	initialize_image_map(map);
 	initialize_background_map(map);

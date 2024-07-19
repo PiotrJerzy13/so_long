@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:32:10 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 11:36:06 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:17:55 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ void	ft_error(int code, t_map *map)
 	else if (code == -2)
 	{
 		ft_printf("Error: Memory allocation failed!\n");
+	}
+	else if (code == -3)
+	{
+		ft_printf("Error: More than one player 'P' found in the map!\n");
+	}
+	else if (code == -4)
+	{
+		ft_printf("Error: More than one exit 'E' found in the map!\n");
+	}
+	else if (code == -5)
+	{
+		ft_printf(" Unknown Symbol found in the map!\n");
+	}
+	else if (code == -6)
+	{
+		ft_printf("Error: Initialization failed!\n");
 	}
 	exit(1);
 }

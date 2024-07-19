@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:51:03 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:15:35 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:59:32 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,19 @@ void	render_game_objects(mlx_t *mlx, t_GameData *data)
 {
 	int	i;
 
-	mlx_image_to_window(mlx, data->character.image,
-		data->character.x, data->character.y);
-	mlx_image_to_window(mlx, data->exit.image, data->exit.x, data->exit.y);
+	if (data->character.image)
+	{
+		mlx_image_to_window(mlx, data->character.image,
+			data->character.x, data->character.y);
+	}
+	if (data->exit.image)
+	{
+		mlx_image_to_window(mlx, data->exit.image, data->exit.x, data->exit.y);
+	}
 	i = 0;
 	while (i < data->coin_count)
 	{
-		if (!data->coins[i].collected)
+		if (!data->coins[i].collected && data->coins[i].image)
 		{
 			mlx_image_to_window(mlx, data->coins[i].image,
 				data->coins[i].x, data->coins[i].y);

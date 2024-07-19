@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:32:57 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:33:50 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ void	validate_args_and_load_map(int argc, char **argv, t_map *map)
 {
 	if (argc < 2)
 	{
-		ft_printf("Missing map path argument !\n");
+		ft_printf("Missing map path argument!\n");
 		exit(1);
 	}
 	else if (argc > 2)
 	{
-		ft_printf("Too many arguments !\n");
+		ft_printf("Too many arguments!\n");
 		exit(1);
 	}
 	*map = (t_map){0};

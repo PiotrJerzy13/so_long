@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 12:07:34 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:06:54 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,23 @@ void	update_position(int key, int *new_col, int *new_row)
 
 int	load_map(t_map *map, char *file_path)
 {
+	int			row;
+	t_Position	player_pos;
+
+	row = 0;
 	map->path = file_path;
 	validate_file_extension(map);
 	process_map(map);
+	while (row < map->height)
+	{
+		row++;
+	}
+	player_pos = find_element(map->map, 'P', map->height, map->width);
+	if (player_pos.row == -1 || player_pos.col == -1)
+	{
+		ft_printf("Error: Player 'P' not found in the loaded map\n");
+		exit(1);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:24:58 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 12:01:15 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:51:28 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,6 @@ void	validate_elements(t_map *map)
 	{
 		ft_printf("Map Error: The map requires at least one player.\n");
 		exit(1);
-	}
-}
-
-void	validate_map_walls(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->height)
-	{
-		validate_walls(map->map[i], map);
-		i++;
 	}
 }
 
@@ -80,18 +68,28 @@ void	validate_side_walls(char *line, int num_columns)
 	}
 }
 
-void	validate_walls(char *line, t_map *map)
+void	validate_map_walls(t_map *map)
 {
-	if (map->current_row == 0)
+	int	i;
+
+	i = 0;
+	while (i < map->height)
 	{
-		validate_top_walls(line, map->num_columns, 1);
+		validate_side_walls(map->map[i], map->width);
+		i++;
 	}
-	else if (map->current_row == map->height - 1)
+}
+
+void	validate_walls(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	validate_top_walls(map->map[0], map->width, 1);
+	validate_top_walls(map->map[map->height - 1], map->width, 0);
+	while (i < map->height - 1)
 	{
-		validate_top_walls(line, map->num_columns, 0);
-	}
-	else
-	{
-		validate_side_walls(line, map->num_columns);
+		validate_side_walls(map->map[i], map->width);
+		i++;
 	}
 }

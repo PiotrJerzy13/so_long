@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 12:03:36 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:39:25 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ typedef struct s_map_data
 	char	**map;
 	int		height;
 	int		width;
+	int		reachable_coins;
+	int		exit_reachable;
+	int		total_coins;
 
 }	t_map_data;
 
@@ -136,7 +139,7 @@ int				can_move_to(t_map *map, int col, int row, int exit_opened);
 // map_check.c
 void			validate_file_extension(t_map *map);
 void			process_map(t_map *map);
-void			validate_walls(char *line, t_map *map);
+void			validate_walls(t_map *map);
 
 int				all_coins_collected(t_GameData *data);
 t_Position		find_element(char **map, char element, int height, int width);
@@ -152,5 +155,9 @@ void			validate_args_and_load_map(int argc, char **argv, t_map *map);
 int				load_map(t_map *map, char *file_path);
 void			check_exit_reached(t_GameData *data);
 void			update_position(int key, int *new_col, int *new_row);
+void			perform_flood_fill(t_map_data *map_data);
+void			flood_fill(int row, int col, t_map_data *map_data);
+void			map_flood_fill(t_map_data *map_data);
+void			count_coins(t_map_data *map_data);
 
 #endif 
