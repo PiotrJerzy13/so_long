@@ -6,52 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:18:16 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:07:34 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	exit_if_all(t_Character *character, t_Exit *exit_door, t_GameData *data)
-{
-	if (all_coins_collected(data))
-	{
-		mlx_delete_image(character->mlx, exit_door->image);
-		exit_door->image = mlx_texture_to_image(character->mlx,
-				mlx_load_png("text/exit_open.png"));
-		mlx_image_to_window(character->mlx,
-			exit_door->image, exit_door->x, exit_door->y);
-		exit_door->opened = 1;
-	}
-}
-
-void	check_and_collect_coin(t_Character *character, t_Coin *coin)
-{
-	if (!coin->collected && character->x == coin->x && character->y == coin->y)
-	{
-		mlx_delete_image(character->mlx, coin->image);
-		coin->collected = 1;
-	}
-}
-
-void	check_coin_collection(t_GameData *data, int block_size)
-{
-	t_Character	*character;
-	t_Coin		*coin;
-	t_Exit		*exit_door;
-	int			i;
-
-	character = &data->character;
-	coin = data->coins;
-	exit_door = &data->exit;
-	i = 0;
-	while (i < data->coin_count)
-	{
-		check_and_collect_coin(character, &coin[i]);
-		i++;
-	}
-	exit_if_all(character, exit_door, data);
-}
 
 void	iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map)
 {
@@ -90,4 +49,42 @@ void	initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
 	coin->x = x;
 	coin->y = y;
 	coin->collected = 0;
+}
+
+void	update_position(int key, int *new_col, int *new_row)
+{
+	if (key == MLX_KEY_LEFT)
+		(*new_col)--;
+	else if (key == MLX_KEY_RIGHT)
+		(*new_col)++;
+	else if (key == MLX_KEY_UP)
+		(*new_row)--;
+	else if (key == MLX_KEY_DOWN)
+		(*new_row)++;
+}
+
+int	load_map(t_map *map, char *file_path)
+{
+	map->path = file_path;
+	validate_file_extension(map);
+	process_map(map);
+	return (0);
+}
+
+void	check_exit_reached(t_GameData *data)
+{
+	t_Character	*character;
+	t_Exit		*exit;
+
+	character = &data->character;
+	exit = &data->exit;
+	if (exit->opened && character->x < exit->x + exit->image->width
+		&& character->x + character->image->width > exit->x
+		&& character->y < exit->y + exit->image->height
+		&& character->y + character->image->height > exit->y)
+	{
+		ft_printf("CONGLATURATION.\n");
+		ft_printf("A WINNER IS YOU.\n");
+		mlx_close_window(character->mlx);
+	}
 }

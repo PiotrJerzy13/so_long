@@ -6,32 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 23:39:24 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:33:05 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	has_valid_extension(const char *path, const char *extension)
-{
-	int			path_len;
-	int			ext_len;
-	const char	*path_ext;
-
-	path_len = ft_strlen(path);
-	ext_len = ft_strlen(extension);
-	if (path_len < ext_len)
-		return (0);
-	path_ext = path + path_len - ext_len;
-	while (*extension)
-	{
-		if (*path_ext != *extension)
-			return (0);
-		path_ext++;
-		extension++;
-	}
-	return (1);
-}
 
 void	read_map_lines(t_map *map)
 {
@@ -131,4 +110,21 @@ void	process_map(t_map *map)
 	validate_map_walls(map);
 	initialize_image_map(map);
 	initialize_background_map(map);
+}
+
+void	check_map_borders(t_map *game_map)
+{
+	int	col;
+
+	col = 0;
+	while (col < game_map->width)
+	{
+		if (game_map->map[0][col] != '1')
+		{
+			ft_printf("Error: The top wall of the map is incomplete!\n");
+			exit(1);
+			break ;
+		}
+		col++;
+	}
 }

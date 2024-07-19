@@ -6,11 +6,24 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:36:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:17:05 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:21:53 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+mlx_t	*initialize_window(int width, int height, const char *title)
+{
+	mlx_t	*mlx;
+
+	mlx = mlx_init(width, height, title, true);
+	if (!mlx)
+	{
+		ft_printf("Failed to initialize window\n");
+		exit(1);
+	}
+	return (mlx);
+}
 
 mlx_texture_t	*load_texture(const char *path)
 {
@@ -64,4 +77,21 @@ void	init_char_and_exit(mlx_t *mlx,
 	data->exit.x = exit_pos.col * BLOCK_SIZE;
 	data->exit.y = exit_pos.row * BLOCK_SIZE;
 	data->exit.opened = 0;
+}
+
+void	load_resources(t_Resources *res, mlx_t *mlx)
+{
+	const char	*paths[] = {
+		"text/4.png",
+		"text/block1.png"
+	};
+
+	res->texture_count = 2;
+	res->textures = malloc(res->texture_count * sizeof(mlx_texture_t *));
+	res->textures[0] = load_texture(paths[0]);
+	res->textures[1] = load_texture(paths[1]);
+	res->image_count = 2;
+	res->images = malloc(res->image_count * sizeof(mlx_image_t *));
+	res->images[0] = create_image(mlx, res->textures[0]);
+	res->images[1] = create_image(mlx, res->textures[1]);
 }

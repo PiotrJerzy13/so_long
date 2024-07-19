@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:31:42 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:01:05 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,22 @@ void	map_flood_fill(t_map_data *map_data)
 	}
 }
 
-void	check_map_borders(t_map *game_map)
+void	validate_file_extension(t_map *map)
 {
-	int	col;
-
-	col = 0;
-	while (col < game_map->width)
+	if (!has_valid_extension(map->path, ".ber"))
 	{
-		if (game_map->map[0][col] != '1')
-		{
-			ft_printf("Error: The top wall of the map is incomplete!\n");
-			exit(1);
-			break ;
-		}
-		col++;
+		ft_printf("Error: The map file must end with *.ber!\n");
+		exit(1);
+	}
+	map->fd = open(map->path, O_RDONLY);
+	if (map->fd < 0)
+	{
+		ft_printf("Error: The map data is missing!\n");
+		exit(1);
+	}
+	else if (map->fd == 0)
+	{
+		ft_printf("Error: The map is empty!\n");
+		exit(1);
 	}
 }

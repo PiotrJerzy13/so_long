@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/18 19:34:45 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 23:40:28 by pwojnaro         ###   ########.fr       */
+/*   Created: 2024/07/19 11:24:58 by pwojnaro          #+#    #+#             */
+/*   Updated: 2024/07/19 12:01:15 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	cleanup(mlx_t *mlx, t_Resources *res)
-{
-	int	i;
-
-	i = 0;
-	while (i < res->texture_count)
-	{
-		mlx_delete_texture(res->textures[i]);
-		i++;
-	}
-	i = 0;
-	while (i < res->image_count)
-	{
-		mlx_delete_image(mlx, res->images[i]);
-		i++;
-	}
-	mlx_terminate(mlx);
-}
 
 void	validate_elements(t_map *map)
 {
@@ -67,36 +48,50 @@ void	validate_map_walls(t_map *map)
 	}
 }
 
-void	validate_file_extension(t_map *map)
+void	validate_top_walls(char *line, int num_columns, int is_top)
 {
-	if (!has_valid_extension(map->path, ".ber"))
+	int	index;
+
+	index = 0;
+	while (index < num_columns)
 	{
-		ft_printf("Error: The map file must end with *.ber!\n");
-		exit(1);
+		if (line[index] != '1')
+		{
+			if (is_top)
+			{
+				ft_printf("Error: The top wall of the map is incomplete!\n");
+			}
+			else
+			{
+				ft_printf("Map Error: The bottom wall is incomplete!\n");
+			}
+			exit(1);
+		}
+		index++;
 	}
-	map->fd = open(map->path, O_RDONLY);
-	if (map->fd < 0)
+}
+
+void	validate_side_walls(char *line, int num_columns)
+{
+	if (line[0] != '1' || line[num_columns - 1] != '1')
 	{
-		ft_printf("Error: The map data is missing!\n");
-		exit(1);
-	}
-	else if (map->fd == 0)
-	{
-		ft_printf("Error: The map is empty!\n");
+		ft_printf("Error: The side walls of the map are incomplete!\n");
 		exit(1);
 	}
 }
 
-int	all_coins_collected(t_GameData *data)
+void	validate_walls(char *line, t_map *map)
 {
-	int	i;
-
-	i = 0;
-	while (i < data->coin_count)
+	if (map->current_row == 0)
 	{
-		if (!data->coins[i].collected)
-			return (0);
-		i++;
+		validate_top_walls(line, map->num_columns, 1);
 	}
-	return (1);
+	else if (map->current_row == map->height - 1)
+	{
+		validate_top_walls(line, map->num_columns, 0);
+	}
+	else
+	{
+		validate_side_walls(line, map->num_columns);
+	}
 }

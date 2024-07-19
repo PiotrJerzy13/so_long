@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:15:21 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:03:36 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_map_data
 mlx_t			*initialize_window(int width, int height, const char *title);
 mlx_texture_t	*load_texture(const char *path);
 mlx_image_t		*create_image(mlx_t *mlx, mlx_texture_t *texture);
+void			load_resources(t_Resources *res, mlx_t *mlx);
 
 // render.c
 void			render_background_and_walls(mlx_t *mlx,
@@ -149,5 +150,7 @@ t_GameData		initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res);
 void			check_coin_collection(t_GameData *data, int block_size);
 void			validate_args_and_load_map(int argc, char **argv, t_map *map);
 int				load_map(t_map *map, char *file_path);
+void			check_exit_reached(t_GameData *data);
+void			update_position(int key, int *new_col, int *new_row);
 
 #endif 

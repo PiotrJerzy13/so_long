@@ -6,41 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 23:38:30 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/19 12:07:45 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-mlx_t	*initialize_window(int width, int height, const char *title)
-{
-	mlx_t	*mlx;
-
-	mlx = mlx_init(width, height, title, true);
-	if (!mlx)
-	{
-		ft_printf("Failed to initialize window\n");
-		exit(1);
-	}
-	return (mlx);
-}
-
-void	load_resources(t_Resources *res, mlx_t *mlx)
-{
-	const char	*paths[] = {
-		"text/4.png",
-		"text/block1.png"
-	};
-
-	res->texture_count = 2;
-	res->textures = malloc(res->texture_count * sizeof(mlx_texture_t *));
-	res->textures[0] = load_texture(paths[0]);
-	res->textures[1] = load_texture(paths[1]);
-	res->image_count = 2;
-	res->images = malloc(res->image_count * sizeof(mlx_image_t *));
-	res->images[0] = create_image(mlx, res->textures[0]);
-	res->images[1] = create_image(mlx, res->textures[1]);
-}
 
 void	setup_game(t_map *map, mlx_t *mlx, t_Resources *res)
 {
@@ -60,14 +30,6 @@ void	setup_game(t_map *map, mlx_t *mlx, t_Resources *res)
 	}
 	render_background_and_walls(mlx, res->images[0], res->block_img, map);
 	free(block_tex);
-}
-
-int	load_map(t_map *map, char *file_path)
-{
-	map->path = file_path;
-	validate_file_extension(map);
-	process_map(map);
-	return (0);
 }
 
 int	main(int argc, char **argv)
