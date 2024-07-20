@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 22:38:34 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:51:02 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main(int argc, char **argv)
 	validate_args_and_load_map(argc, argv, &map);
 	mlx = initialize_window(FIXED_WINDOW_WIDTH, FIXED_WINDOW_HEIGHT, "Window");
 	if (!mlx)
-		ft_error(6, &map);
+		ft_error(6);
 	load_resources(&res, mlx);
 	setup_and_validate_game(mlx, &map, &res, &data);
 	iterate_and_populate(mlx, &data, &map);

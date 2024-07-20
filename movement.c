@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:27:40 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 12:12:07 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:39:52 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		update_position(keydata.key, &new_col, &new_row);
 		handle_movement(data, new_col, new_row, BLOCK_SIZE);
 		ft_printf("Moves: %d\n", data->move_count);
-		check_coin_collection(data, BLOCK_SIZE);
+		check_coin_collection(data);
 		check_exit_reached(data);
 	}
 }
@@ -88,7 +88,7 @@ void	check_and_collect_coin(t_Character *character, t_Coin *coin)
 	}
 }
 
-void	check_coin_collection(t_GameData *data, int block_size)
+void	check_coin_collection(t_GameData *data)
 {
 	t_Character	*character;
 	t_Coin		*coin;

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 12:30:36 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:33:07 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void			process_map(t_map *map);
 void			validate_walls(t_map *map);
 
 // Error handling
-void			ft_error(int code, t_map *map);
+void			ft_error(int code);
 
 // Image and block generation
 void			initialize_image_map(t_map *map);
@@ -143,7 +143,7 @@ void			iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map);
 void			init_char_and_exit(mlx_t *mlx, t_GameData *data,
 					t_map *map, int block_size);
 t_GameData		initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res);
-void			check_coin_collection(t_GameData *data, int block_size);
+void			check_coin_collection(t_GameData *data);
 void			validate_args_and_load_map(int argc, char **argv, t_map *map);
 int				load_map(t_map *map, char *file_path);
 void			check_exit_reached(t_GameData *data);

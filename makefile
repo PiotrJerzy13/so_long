@@ -2,7 +2,7 @@
 CC = cc
 
 # Compiler flags
-CFLAGS = -I./include -I./libft
+CFLAGS = -I./include -I./libft -Wall -Wextra -Werror
 
 # Linker flags (ensure paths to libglfw and libmlx42 are correct)
 LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm -L./libft -lft

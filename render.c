@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:51:03 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 21:59:32 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:37:53 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ void	render_game_objects(mlx_t *mlx, t_GameData *data)
 			data->character.x, data->character.y);
 	}
 	if (data->exit.image)
-	{
 		mlx_image_to_window(mlx, data->exit.image, data->exit.x, data->exit.y);
-	}
 	i = 0;
 	while (i < data->coin_count)
 	{
@@ -89,6 +87,7 @@ void	calculate_map_dimensions(t_map *map)
 	char	*line;
 	int		fd;
 
+	fd = 0;
 	map->height = 0;
 	map->width = 0;
 	line = get_next_line(fd);

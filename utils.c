@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:32:10 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 22:17:55 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:49:48 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	has_valid_extension(const char *path, const char *extension)
 	return (1);
 }
 
-void	ft_error(int code, t_map *map)
+void	ft_error(int code)
 {
 	if (code == -1)
 	{

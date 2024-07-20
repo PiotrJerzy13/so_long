@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 21:33:50 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:52:36 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ void	initialize_image_map(t_map *map)
 	map->img_map = (mlx_image_t ****) ft_calloc(map->height,
 			sizeof(mlx_image_t ***));
 	if (!map->img_map)
-		ft_error(-2, map);
+		ft_error(-2);
 	while (r < map->height)
 	{
 		map->img_map[r] = (mlx_image_t ***) ft_calloc(map->width,
 				sizeof(mlx_image_t **));
 		if (!map->img_map[r])
-			ft_error(-2, map);
+			ft_error(-2);
 		while (c < map->width)
 		{
 			map->img_map[r][c] = (mlx_image_t **) ft_calloc(16,
 					sizeof(mlx_image_t *));
 			if (!map->img_map[r][c])
-				ft_error(-2, map);
+				ft_error(-2);
 			c++;
 		}
 		r++;
@@ -107,7 +107,7 @@ void	validate_args_and_load_map(int argc, char **argv, t_map *map)
 	*map = (t_map){0};
 	if (load_map(map, argv[1]) != 0)
 	{
-		ft_printf("The map file name must end with *.ber!\n");
+		ft_printf("Error loading the map!\n");
 		exit(1);
 	}
 }

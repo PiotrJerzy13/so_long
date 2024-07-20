@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 22:06:54 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:59:07 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,14 @@ void	check_exit_reached(t_GameData *data)
 
 	character = &data->character;
 	exit = &data->exit;
-	if (exit->opened && character->x < exit->x + exit->image->width
-		&& character->x + character->image->width > exit->x
-		&& character->y < exit->y + exit->image->height
-		&& character->y + character->image->height > exit->y)
+	if (exit->opened && (unsigned int)character->x
+		< (unsigned int)(exit->x + exit->image->width)
+		&& (unsigned int)(character->x + character->image->width)
+		> (unsigned int)exit->x
+		&& (unsigned int)character->y
+		< (unsigned int)(exit->y + exit->image->height)
+		&& (unsigned int)(character->y + character->image->height)
+		> (unsigned int)exit->y)
 	{
 		ft_printf("CONGLATURATION.\n");
 		ft_printf("A WINNER IS YOU.\n");

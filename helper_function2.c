@@ -6,13 +6,13 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 12:15:34 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:56:37 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	allocate_and_initialize_coins(mlx_t *mlx, t_GameData *data, t_map *map)
+void	allocate_and_initialize_coins(t_GameData *data, t_map *map)
 {
 	data->coin_count = map->coin_n;
 	data->coins = (t_Coin *)ft_calloc(data->coin_count, sizeof(t_Coin));
@@ -32,16 +32,9 @@ t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
 	data.map = map;
 	data.res = res;
 	data.move_count = 0;
-	if (mlx->width / map->width > 0)
-	{
-		block_size = mlx->width / map->width;
-	}
-	else
-	{
-		block_size = BLOCK_SIZE;
-	}
+	block_size = BLOCK_SIZE;
 	init_char_and_exit(mlx, &data, map, block_size);
-	allocate_and_initialize_coins(mlx, &data, map);
+	allocate_and_initialize_coins(&data, map);
 	iterate_and_populate(mlx, &data, map);
 	return (data);
 }
