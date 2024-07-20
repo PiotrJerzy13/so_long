@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:27:40 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 12:03:00 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:12:07 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	exit_if_all(t_Character *character, t_Exit *exit_door, t_GameData *data)
 		mlx_image_to_window(character->mlx,
 			exit_door->image, exit_door->x, exit_door->y);
 		exit_door->opened = 1;
+		ft_printf("Exit is open!\n");
 	}
 }
 

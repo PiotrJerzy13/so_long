@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:24:58 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 20:51:28 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:16:11 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ void	validate_elements(t_map *map)
 		ft_printf("Error: The map is too small!\n");
 		exit(1);
 	}
-	if (map->c_num == 0)
+	if (map->coin_n == 0)
 	{
 		ft_printf("Error: Collectibles are missing from the map!\n");
 		exit(1);
 	}
-	if (map->e_num == 0)
+	if (map->exit_n == 0)
 	{
 		ft_printf("Map Error: The map requires at least one exit point.\n");
 		exit(1);
 	}
-	if (map->p_num == 0)
+	if (map->player_n == 0)
 	{
 		ft_printf("Map Error: The map requires at least one player.\n");
 		exit(1);

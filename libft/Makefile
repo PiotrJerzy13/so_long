@@ -5,6 +5,9 @@ CFLAGS = -Wall -Wextra -Werror
 # Library name
 NAME = libft.a
 
+# Build directory
+BUILD_DIR = build
+
 # Source files for libft
 SOURCES = \
 	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
@@ -17,22 +20,23 @@ SOURCES = \
 	ft_printf.c ft_putunsignednbr_fd.c print_hex.c \
 	get_next_line.c ft_strleni.c ft_realloc.c
 
-# Object files
-OBJECTS = $(SOURCES:.c=.o)
+# Object files in build directory
+OBJECTS = $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 
 # Bonus source files
 BSOURCES = \
 	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
 	ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
-# Bonus object files
-BOBJECTS = $(BSOURCES:.c=.o)
+# Bonus object files in build directory
+BOBJECTS = $(BSOURCES:%.c=$(BUILD_DIR)/%.o)
 
 # Main target
 all: $(NAME)
 
-# Pattern rule for compiling .c to .o 
-%.o: %.c
+# Rule to create build directory and compile .c to .o 
+$(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -I./ -c $< -o $@
 
 # Rule for creating the library
@@ -45,7 +49,7 @@ bonus: $(OBJECTS) $(BOBJECTS)
 
 # Clean up object files
 clean:
-	rm -f $(OBJECTS) $(BOBJECTS)
+	rm -rf $(BUILD_DIR)
 
 # Clean up object files and the library
 fclean: clean

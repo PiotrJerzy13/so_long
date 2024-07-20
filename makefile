@@ -1,5 +1,5 @@
 # Compiler
-CC = gcc
+CC = cc
 
 # Compiler flags
 CFLAGS = -I./include -I./libft
@@ -10,8 +10,11 @@ LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm -L./libft -lft
 # Source files
 SOURCES = main.c init.c render.c movement.c map_check.c image_block_gen.c utils.c helper_function.c helper_function2.c validation.c
 
-# Object files (same as source files but with .o extension)
-OBJECTS = $(SOURCES:.c=.o)
+# Build directory
+BUILD_DIR = build
+
+# Object files (same as source files but with .o extension in build directory)
+OBJECTS = $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 
 # Executable name
 EXECUTABLE = so_long
@@ -23,8 +26,9 @@ all: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS) libft/libft.a
 	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
 
-# Rule to create object files
-%.o: %.c
+# Rule to create object files in the build directory
+$(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Ensure libft is built
@@ -41,3 +45,4 @@ fclean: clean
 	make -C libft fclean
 
 re: fclean all
+

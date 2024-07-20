@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 23:17:00 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/20 12:23:57 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,21 @@ void	count_map_elements(char *line, t_map *map)
 	while (*line)
 	{
 		if (*line == 'C')
-			map->c_num++;
+			map->coin_n++;
 		else if (*line == 'P')
 		{
-			map->p_num++;
-			if (map->p_num > 1)
+			map->player_n++;
+			if (map->player_n > 1)
 				ft_error(-3, map);
 		}
 		else if (*line == 'E')
 		{
-			map->e_num++;
-			if (map->e_num > 1)
+			map->exit_n++;
+			if (map->exit_n > 1)
 				ft_error(-4, map);
 		}
 		else if (*line == '1')
-			map->w_num++;
+			map->wall_n++;
 		else if (*line == '0')
 			;
 		else
