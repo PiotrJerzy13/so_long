@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 20:47:33 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 22:00:46 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:06:19 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ int	ft_printf(const char *format_str, ...)
 {
 	va_list	ap;
 	int		printed_chars;
-	int		count;
 
 	printed_chars = 0;
-	count = 0;
 	va_start(ap, format_str);
 	while (*format_str)
 	{

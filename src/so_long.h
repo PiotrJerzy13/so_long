@@ -6,14 +6,14 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/23 19:48:35 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/23 20:05:57 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "MLX42/MLX42.h"
+# include "../lib/MLX42/include/MLX42/MLX42.h"
 # include <fcntl.h>
 # include "libft/libft.h"
 
