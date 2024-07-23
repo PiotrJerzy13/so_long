@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 13:51:02 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:45:52 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ int	main(int argc, char **argv)
 	cleanup(mlx, &res);
 	free(res.textures);
 	free(res.images);
+	ft_clean(&map);
 	return (0);
 }

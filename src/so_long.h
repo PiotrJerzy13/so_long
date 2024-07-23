@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 14:33:07 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:48:35 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,6 @@ void			perform_flood_fill(t_map_data *map_data);
 void			flood_fill(int row, int col, t_map_data *map_data);
 void			map_flood_fill(t_map_data *map_data);
 void			count_coins(t_map_data *map_data);
+void			ft_clean(t_map *map);
 
 #endif

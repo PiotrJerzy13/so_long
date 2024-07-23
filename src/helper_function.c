@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 13:59:07 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:42:37 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,25 @@ int	load_map(t_map *map, char *file_path)
 
 void	check_exit_reached(t_GameData *data)
 {
-	t_Character	*character;
-	t_Exit		*exit;
+	t_Character		*character;
+	t_Exit			*exit;
+	unsigned int	char_center_x;
+	unsigned int	char_center_y;
 
 	character = &data->character;
 	exit = &data->exit;
-	if (exit->opened && (unsigned int)character->x
-		< (unsigned int)(exit->x + exit->image->width)
-		&& (unsigned int)(character->x + character->image->width)
-		> (unsigned int)exit->x
-		&& (unsigned int)character->y
-		< (unsigned int)(exit->y + exit->image->height)
-		&& (unsigned int)(character->y + character->image->height)
-		> (unsigned int)exit->y)
+	char_center_x = (unsigned int)(character->x + character->image->width / 2);
+	char_center_y = (unsigned int)(character->y + character->image->height / 2);
+	if (exit->opened)
 	{
-		ft_printf("CONGLATURATION.\n");
-		ft_printf("A WINNER IS YOU.\n");
-		mlx_close_window(character->mlx);
+		if (char_center_x >= (unsigned int)exit->x
+			&& char_center_x <= (unsigned int)(exit->x + exit->image->width) &&
+			char_center_y >= (unsigned int)exit->y &&
+			char_center_y <= (unsigned int)(exit->y + exit->image->height))
+		{
+			ft_printf("CONGLATURATION.\n");
+			ft_printf("A WINNER IS YOU.\n");
+			mlx_close_window(character->mlx);
+		}
 	}
 }

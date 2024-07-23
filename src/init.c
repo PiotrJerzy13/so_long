@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:36:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/19 21:56:12 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:44:42 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ mlx_image_t	*create_image(mlx_t *mlx, mlx_texture_t *texture)
 }
 
 void	init_char_and_exit(mlx_t *mlx, t_GameData *data,
-		t_map *map, int block_size)
+	t_map *map, int block_size)
 {
 	t_Position	player_pos;
 	t_Position	exit_pos;
@@ -62,7 +62,6 @@ void	init_char_and_exit(mlx_t *mlx, t_GameData *data,
 	data->character.image = create_image(mlx, load_texture("text/idle.png"));
 	if (!data->character.image)
 	{
-		ft_printf("Failed to load character image\n");
 		exit(1);
 	}
 	data->exit.image = create_image(mlx, load_texture("text/exit_open.png"));
