@@ -1,48 +1,70 @@
-# Compiler
+NAME = so_long
+
 CC = cc
+CFLAGS = -Wall -Werror -Wextra -g
 
-# Compiler flags
-CFLAGS = -I./include -I./libft -Wall -Wextra -Werror
+CFLAGS_MLX := -Wextra -Wall -Werror -Wunreachable-code -Ofast
+LIBMLX := ./lib/MLX42
 
-# Linker flags (ensure paths to libglfw and libmlx42 are correct)
-LDFLAGS = -L./lib -lmlx42 -lglfw -ldl -lm -L./libft -lft
+HEADERS := -I ./include -I $(LIBMLX)/include
 
-# Source files
-SOURCES = main.c init.c render.c movement.c map_check.c image_block_gen.c utils.c helper_function.c helper_function2.c validation.c
+LIBFTNAME = bin/libft/libft.a
+LIBFTDIR = src/libft
+OBJDIR = ./bin
+SRCDIR = ./src
 
-# Build directory
-BUILD_DIR = build
+LIBMLXA := $(LIBMLX)/build/libmlx42.a
+MLX_PATH := lib/MLX42
 
-# Object files (same as source files but with .o extension in build directory)
-OBJECTS = $(SOURCES:%.c=$(BUILD_DIR)/%.o)
+HEADERS := -I ./include -I $(LIBMLX)/include
+LIB_MLX := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+SRC_MLX := $(shell find ./src -iname "*.c")
+OBJ_MLX := ${SRC_MLX:.c=.o}
 
-# Executable name
-EXECUTABLE = so_long
+SRCS = main.c init.c render.c movement.c map_check.c cleaning.c image_block_gen.c utils.c helper_function.c helper_function2.c validation.c
 
-# Default target
-all: $(EXECUTABLE)
+OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 
-# Rule to create the executable
-$(EXECUTABLE): $(OBJECTS) libft/libft.a
-	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -Isrc -c $< -o $@
 
-# Rule to create object files in the build directory
-$(BUILD_DIR)/%.o: %.c
-	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.c
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
-# Ensure libft is built
-libft/libft.a:
-	make -C libft all
+all: init-submodules $(NAME)
 
-# Clean up build files
+init-submodules:
+	@if [ -z "$(shell ls -A $(MLX_PATH))" ]; then \
+		git submodule init $(MLX_PATH); \
+		git submodule update $(MLX_PATH); \
+	fi
+
+$(LIBMLXA):
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+
+makelibft:
+	@if [ ! -f "$(LIBFTNAME)" ]; then \
+		make -C $(LIBFTDIR) --no-print-directory; \
+	fi
+
+$(NAME): makelibft $(LIBMLXA) $(OBJS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB_MLX) $(HEADERS) -L$(OBJDIR)/libft -lft
+
+clean-empty-dirs:
+	@if [ -d $(OBJDIR) ]; then find $(OBJDIR) -type d -empty -exec rmdir {} +; fi
+
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
-	make -C libft clean
+	@rm -f $(OBJS)
+	@make -C $(LIBFTDIR) clean --no-print-directory
+	@$(MAKE) clean-empty-dirs
+	@rm -rf $(LIBMLX)/build
 
 fclean: clean
-	rm -f $(EXECUTABLE)
-	make -C libft fclean
+	@rm -f $(NAME)
+	@make -C $(LIBFTDIR) fclean --no-print-directory
+	@$(MAKE) clean-empty-dirs
 
 re: fclean all
 
+.PHONY: all clean fclean norm re bonus

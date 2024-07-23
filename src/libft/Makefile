@@ -6,10 +6,10 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
 # Build directory
-BUILD_DIR = build
+OBJDIR = ../../bin/libft
 
 # Source files for libft
-SOURCES = \
+SRCS = \
 	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 	ft_strlen.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c \
 	ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c \
@@ -20,42 +20,25 @@ SOURCES = \
 	ft_printf.c ft_putunsignednbr_fd.c print_hex.c \
 	get_next_line.c ft_strleni.c ft_realloc.c
 
-# Object files in build directory
-OBJECTS = $(SOURCES:%.c=$(BUILD_DIR)/%.o)
+# Object files
+OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 
-# Bonus source files
-BSOURCES = \
-	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
-	ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
+# Rules
+all: $(OBJDIR)/$(NAME)
 
-# Bonus object files in build directory
-BOBJECTS = $(BSOURCES:%.c=$(BUILD_DIR)/%.o)
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ && echo "\033[0;32m$< OK!\033[0m" || echo "\033[0;31m$< KO!\033[0m"
 
-# Main target
-all: $(NAME)
+$(OBJDIR)/$(NAME): $(OBJS)
+	@ar rcs $@ $^
 
-# Rule to create build directory and compile .c to .o 
-$(BUILD_DIR)/%.o: %.c
-	@mkdir -p $(BUILD_DIR)
-	$(CC) $(CFLAGS) -I./ -c $< -o $@
-
-# Rule for creating the library
-$(NAME): $(OBJECTS)
-	ar rcs $(NAME) $(OBJECTS)
-
-# Rule for bonus part of the library
-bonus: $(OBJECTS) $(BOBJECTS)
-	ar rcs $(NAME) $(OBJECTS) $(BOBJECTS)
-
-# Clean up object files
 clean:
-	rm -rf $(BUILD_DIR)
+	@rm -f $(OBJS)
 
-# Clean up object files and the library
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(OBJDIR)/$(NAME)
 
-# Rebuild everything
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
