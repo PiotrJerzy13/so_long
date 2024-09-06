@@ -6,11 +6,27 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/23 19:42:37 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:39:22 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	free_coins(t_Coin *coins, int coin_count, mlx_t *mlx)
+{
+	int	i;
+
+	i = 0;
+	while (i < coin_count)
+	{
+		if (coins[i].image)
+		{
+			mlx_delete_image(mlx, coins[i].image);
+			coins[i].image = NULL;
+		}
+		i++;
+	}
+}
 
 void	iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map)
 {
@@ -40,7 +56,7 @@ void	iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map)
 
 void	initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
 {
-	coin->image = create_image(mlx, load_texture("text/coin.png"));
+	coin->image = create_image(mlx, "text/coin.png");
 	if (!coin->image)
 	{
 		ft_printf("Failed to load coin image\n");
@@ -83,29 +99,4 @@ int	load_map(t_map *map, char *file_path)
 		exit(1);
 	}
 	return (0);
-}
-
-void	check_exit_reached(t_GameData *data)
-{
-	t_Character		*character;
-	t_Exit			*exit;
-	unsigned int	char_center_x;
-	unsigned int	char_center_y;
-
-	character = &data->character;
-	exit = &data->exit;
-	char_center_x = (unsigned int)(character->x + character->image->width / 2);
-	char_center_y = (unsigned int)(character->y + character->image->height / 2);
-	if (exit->opened)
-	{
-		if (char_center_x >= (unsigned int)exit->x
-			&& char_center_x <= (unsigned int)(exit->x + exit->image->width) &&
-			char_center_y >= (unsigned int)exit->y &&
-			char_center_y <= (unsigned int)(exit->y + exit->image->height))
-		{
-			ft_printf("CONGLATURATION.\n");
-			ft_printf("A WINNER IS YOU.\n");
-			mlx_close_window(character->mlx);
-		}
-	}
 }

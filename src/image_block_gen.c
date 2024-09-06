@@ -6,11 +6,40 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 13:52:36 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:26:56 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	free_image_map(t_map *map, int max_r, int max_c)
+{
+	int	r;
+	int	c;
+	int	column_limit;
+
+	r = 0;
+	while (r < max_r)
+	{
+		if (map->img_map[r])
+		{
+			if (r == max_r - 1)
+				column_limit = max_c;
+			else
+				column_limit = map->width;
+			c = 0;
+			while (c < column_limit)
+			{
+				if (map->img_map[r][c])
+					free(map->img_map[r][c]);
+				c++;
+			}
+			free(map->img_map[r]);
+		}
+		r++;
+	}
+	free(map->img_map);
+}
 
 void	initialize_image_map(t_map *map)
 {
@@ -18,7 +47,6 @@ void	initialize_image_map(t_map *map)
 	int	c;
 
 	r = 0;
-	c = 0;
 	map->img_map = (mlx_image_t ****) ft_calloc(map->height,
 			sizeof(mlx_image_t ***));
 	if (!map->img_map)
@@ -28,13 +56,20 @@ void	initialize_image_map(t_map *map)
 		map->img_map[r] = (mlx_image_t ***) ft_calloc(map->width,
 				sizeof(mlx_image_t **));
 		if (!map->img_map[r])
+		{
+			free_image_map(map, r, 0);
 			ft_error(-2);
+		}
+		c = 0;
 		while (c < map->width)
 		{
 			map->img_map[r][c] = (mlx_image_t **) ft_calloc(16,
 					sizeof(mlx_image_t *));
 			if (!map->img_map[r][c])
+			{
+				free_image_map(map, r + 1, c);
 				ft_error(-2);
+			}
 			c++;
 		}
 		r++;
@@ -85,11 +120,32 @@ void	initialize_background_map(t_map *map)
 		if (!map->background_map[i])
 		{
 			ft_printf("Memory allocation did not work!\n");
+			free_background_map(map);
 			exit(1);
 		}
 		i++;
 	}
 	initialize_wall_map(map);
+}
+
+void	free_background_map(t_map *map)
+{
+	int	i;
+
+	if (!map->background_map)
+		return ;
+	i = 0;
+	while (i < map->height)
+	{
+		if (map->background_map[i])
+		{
+			free(map->background_map[i]);
+			map->background_map[i] = NULL;
+		}
+		i++;
+	}
+	free(map->background_map);
+	map->background_map = NULL;
 }
 
 void	validate_args_and_load_map(int argc, char **argv, t_map *map)

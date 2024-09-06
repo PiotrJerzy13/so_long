@@ -6,11 +6,39 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 14:24:27 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:34:46 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	free_map(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->current_row)
+	{
+		if (map->map[i])
+			free(map->map[i]);
+		i++;
+	}
+	free(map->map);
+}
+
+void	free_map_lines(t_map *map, int max_row)
+{
+	int	i;
+
+	i = 0;
+	while (i < max_row)
+	{
+		if (map->map[i])
+			free(map->map[i]);
+		i++;
+	}
+	free(map->map);
+}
 
 void	add_line_to_map(char *line, t_map *map)
 {
@@ -29,14 +57,11 @@ void	add_line_to_map(char *line, t_map *map)
 	count_map_elements(line, map);
 }
 
-void	read_map_lines(t_map *map)
+void	read_lines(t_map *map)
 {
 	char	*line;
 	size_t	line_length;
 
-	map->map = (char **)ft_calloc(1, sizeof(char *));
-	if (!map->map)
-		ft_error(-2);
 	line = get_next_line(map->fd);
 	while (line)
 	{
@@ -46,12 +71,21 @@ void	read_map_lines(t_map *map)
 		if (line_length != (size_t)map->num_columns)
 		{
 			free(line);
-			ft_error(-1);
+			free_map_lines(map, map->current_row);
 		}
-		add_line_to_map(line, map);
+		map->map = (char **)ft_realloc(map->map,
+				(map->current_row) * sizeof(char *),
+				(map->current_row + 1) * sizeof(char *));
+		if (!map->map)
+		{
+			free(line);
+			free_map_lines(map, map->current_row);
+			ft_error(2);
+		}
+		map->map[map->current_row++] = line;
+		count_map_elements(line, map);
 		line = get_next_line(map->fd);
 	}
-	free(line);
 }
 
 void	count_map_elements(char *line, t_map *map)
@@ -80,58 +114,4 @@ void	count_map_elements(char *line, t_map *map)
 			ft_error(-5);
 		line++;
 	}
-}
-
-void	read_lines(t_map *map)
-{
-	char	*line;
-	size_t	line_length;
-
-	line = get_next_line(map->fd);
-	while (line)
-	{
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		line_length = ft_strlen(line);
-		if (line_length != (size_t)map->num_columns)
-		{
-			ft_error(1);
-			free(line);
-		}
-		map->map = (char **)ft_realloc(map->map,
-				(map->current_row) * sizeof(char *),
-				(map->current_row + 1) * sizeof(char *));
-		if (!map->map)
-			ft_error(2);
-		map->map[map->current_row++] = line;
-		count_map_elements(line, map);
-		line = get_next_line(map->fd);
-	}
-}
-
-void	process_map(t_map *map)
-{
-	char	*line;
-
-	line = get_next_line(map->fd);
-	if (!line)
-	{
-		ft_printf("Error: The map data is empty!\n");
-		exit(1);
-	}
-	line[ft_strlen(line) - 1] = '\0';
-	map->num_columns = ft_strlen(line);
-	map->current_row = 0;
-	map->map = (char **)ft_calloc(1, sizeof(char *));
-	map->map[map->current_row++] = line;
-	count_map_elements(line, map);
-	read_lines(map);
-	close(map->fd);
-	validate_elements(map);
-	map->height = map->current_row;
-	map->width = map->num_columns;
-	validate_walls(map);
-	validate_map_walls(map);
-	initialize_image_map(map);
-	initialize_background_map(map);
 }

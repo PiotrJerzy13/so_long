@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/23 20:05:57 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:42:14 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct s_map_data
 // Initialization functions
 mlx_t			*initialize_window(int width, int height, const char *title);
 mlx_texture_t	*load_texture(const char *path);
-mlx_image_t		*create_image(mlx_t *mlx, mlx_texture_t *texture);
+mlx_image_t		*create_image(mlx_t *mlx, const char *path);
 void			load_resources(t_Resources *res, mlx_t *mlx);
 
 // Rendering functions
@@ -125,9 +125,12 @@ void			validate_map_walls(t_map *map);
 void			validate_file_extension(t_map *map);
 void			process_map(t_map *map);
 void			validate_walls(t_map *map);
+void			check_and_collect_coin(t_Character *character, t_Coin *coin);
 
 // Error handling
 void			ft_error(int code);
+void			handle_movement(t_GameData *data, int new_col,
+					int new_row, int block_size);
 
 // Image and block generation
 void			initialize_image_map(t_map *map);
@@ -153,5 +156,13 @@ void			flood_fill(int row, int col, t_map_data *map_data);
 void			map_flood_fill(t_map_data *map_data);
 void			count_coins(t_map_data *map_data);
 void			ft_clean(t_map *map);
+void			exit_if_all(t_Character *character, t_Exit *exit_door,
+					t_GameData *data);
+void			close_window_and_cleanup(mlx_t *mlx, t_Resources *res,
+					t_map *map);
+void			cleanup_resources(t_Resources *res, mlx_t *mlx);
+void			free_background_map(t_map *map);
+void			free_coins(t_Coin *coins, int coin_count, mlx_t *mlx);
+void			read_lines(t_map *map);
 
 #endif
