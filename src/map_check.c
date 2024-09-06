@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 11:34:46 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:27:30 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,78 +40,72 @@ void	free_map_lines(t_map *map, int max_row)
 	free(map->map);
 }
 
-void	add_line_to_map(char *line, t_map *map)
+void	process_line(t_map *map, char *line)
 {
-	char	**new_map;
-
-	new_map = (char **)ft_realloc(map->map,
-			(map->current_row) * sizeof(char *),
-			(map->current_row + 1) * sizeof(char *));
-	if (!new_map)
+	if (line[ft_strlen(line) - 1] == '\n')
+		line[ft_strlen(line) - 1] = '\0';
+	if (ft_strlen(line) != (size_t)map->num_columns)
 	{
 		free(line);
-		ft_error(-2);
+		free_map_lines(map, map->current_row);
+		ft_error(-1);
 	}
-	map->map = new_map;
 	map->map[map->current_row++] = line;
 	count_map_elements(line, map);
+}
+
+void	realloc_map(t_map *map)
+{
+	map->map = (char **)ft_realloc(map->map,
+			map->current_row * sizeof(char *),
+			(map->current_row + 1) * sizeof(char *));
+	if (!map->map)
+	{
+		free_map_lines(map, map->current_row);
+		ft_error(-2);
+	}
 }
 
 void	read_lines(t_map *map)
 {
 	char	*line;
-	size_t	line_length;
 
 	line = get_next_line(map->fd);
-	while (line)
+	while (line != NULL)
 	{
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		line_length = ft_strlen(line);
-		if (line_length != (size_t)map->num_columns)
-		{
-			free(line);
-			free_map_lines(map, map->current_row);
-		}
-		map->map = (char **)ft_realloc(map->map,
-				(map->current_row) * sizeof(char *),
-				(map->current_row + 1) * sizeof(char *));
-		if (!map->map)
-		{
-			free(line);
-			free_map_lines(map, map->current_row);
-			ft_error(2);
-		}
-		map->map[map->current_row++] = line;
-		count_map_elements(line, map);
+		realloc_map(map);
+		process_line(map, line);
 		line = get_next_line(map->fd);
 	}
 }
 
-void	count_map_elements(char *line, t_map *map)
-{
-	while (*line)
-	{
-		if (*line == 'C')
-			map->coin_n++;
-		else if (*line == 'P')
-		{
-			map->player_n++;
-			if (map->player_n > 1)
-				ft_error(-3);
-		}
-		else if (*line == 'E')
-		{
-			map->exit_n++;
-			if (map->exit_n > 1)
-				ft_error(-4);
-		}
-		else if (*line == '1')
-			map->wall_n++;
-		else if (*line == '0')
-			;
-		else
-			ft_error(-5);
-		line++;
-	}
-}
+// void	read_lines(t_map *map)
+// {
+// 	char	*line;
+// 	size_t	line_length;
+
+// 	line = get_next_line(map->fd);
+// 	while (line)
+// 	{
+// 		if (line[ft_strlen(line) - 1] == '\n')
+// 			line[ft_strlen(line) - 1] = '\0';
+// 		line_length = ft_strlen(line);
+// 		if (line_length != (size_t)map->num_columns)
+// 		{
+// 			free(line);
+// 			free_map_lines(map, map->current_row);
+// 		}
+// 		map->map = (char **)ft_realloc(map->map,
+// 				(map->current_row) * sizeof(char *),
+// 				(map->current_row + 1) * sizeof(char *));
+// 		if (!map->map)
+// 		{
+// 			free(line);
+// 			free_map_lines(map, map->current_row);
+// 			ft_error(2);
+// 		}
+// 		map->map[map->current_row++] = line;
+// 		count_map_elements(line, map);
+// 		line = get_next_line(map->fd);
+// 	}
+// }

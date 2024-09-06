@@ -6,59 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:36:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 11:37:31 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:51:54 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-mlx_t	*initialize_window(int width, int height, const char *title)
-{
-	mlx_t	*mlx;
-
-	mlx = mlx_init(width, height, title, true);
-	if (!mlx)
-	{
-		ft_printf("Failed to initialize window\n");
-		exit(1);
-	}
-	return (mlx);
-}
-
-mlx_texture_t	*load_texture(const char *path)
-{
-	mlx_texture_t	*texture;
-
-	texture = mlx_load_png(path);
-	if (!texture)
-	{
-		ft_printf("Failed to load texture: %s\n", path);
-		exit(1);
-	}
-	return (texture);
-}
-
-mlx_image_t	*create_image(mlx_t *mlx, const char *path)
-{
-	mlx_texture_t	*texture;
-	mlx_image_t		*image;
-
-	texture = load_texture(path);
-	if (!texture)
-	{
-		ft_printf("Failed to load texture: %s\n", path);
-		exit(1);
-	}
-	image = mlx_texture_to_image(mlx, texture);
-	if (!image)
-	{
-		ft_printf("Failed to convert texture to image\n");
-		mlx_delete_texture(texture);
-		exit(1);
-	}
-	mlx_delete_texture(texture);
-	return (image);
-}
 
 void	init_char_and_exit(mlx_t *mlx, t_GameData *data, t_map *map,
 		int block_size)
@@ -88,71 +40,80 @@ void	init_char_and_exit(mlx_t *mlx, t_GameData *data, t_map *map,
 	data->exit.opened = 0;
 }
 
-void	load_resources(t_Resources *res, mlx_t *mlx)
+void	free_textures(mlx_texture_t **textures, int count)
 {
 	int	i;
-	int	j;
-	const char *paths[] = {
-		"text/4.png",
-		"text/block1.png"
-	};
 
-	res->texture_count = 2;
-	res->textures = malloc(res->texture_count * sizeof(mlx_texture_t *));
-	if (!res->textures)
-		exit(1);
 	i = 0;
+	while (i < count)
+	{
+		if (textures[i])
+			mlx_delete_texture(textures[i]);
+		i++;
+	}
+}
+
+void	free_images(mlx_t *mlx, mlx_image_t **images, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		if (images[i])
+			mlx_delete_image(mlx, images[i]);
+		i++;
+	}
+}
+
+void	handle_error_cleanup(t_Resources *res, mlx_t *mlx, int count,
+	int is_texture)
+{
+	int	j;
+
+	j = 0;
+	if (is_texture)
+	{
+		while (j < count)
+			mlx_delete_texture(res->textures[j++]);
+		free(res->textures);
+	}
+	else
+	{
+		while (j < count)
+			mlx_delete_image(mlx, res->images[j++]);
+		free(res->images);
+		free_textures(res->textures, res->texture_count);
+		free(res->textures);
+	}
+	exit(1);
+}
+
+void	load_resources(t_Resources *res, mlx_t *mlx)
+{
+	const char	*paths[] = {"text/4.png", "text/block1.png"};
+	int			i;
+
+	i = 0;
+	res->texture_count = 2;
+	res->image_count = 2;
+	res->textures = malloc(res->texture_count * sizeof(mlx_texture_t *));
+	res->images = malloc(res->image_count * sizeof(mlx_image_t *));
+	if (!res->textures || !res->images)
+		exit(1);
 	while (i < res->texture_count)
 	{
 		res->textures[i] = load_texture(paths[i]);
 		if (!res->textures[i])
-		{
-			j = 0;
-			while (j < i)
-			{
-				mlx_delete_texture(res->textures[j]);
-				j++;
-			}
-			free(res->textures);
-			exit(1);
-		}
+			handle_error_cleanup(res, mlx, i, 1);
 		i++;
-	}
-	res->image_count = 2;
-	res->images = malloc(res->image_count * sizeof(mlx_image_t *));
-	if (!res->images)
-	{
-		i = 0;
-		while (i < res->texture_count)
-		{
-			mlx_delete_texture(res->textures[i]);
-			i++;
-		}
-		free(res->textures);
-		exit(1);
 	}
 	i = 0;
 	while (i < res->image_count)
 	{
 		res->images[i] = create_image(mlx, paths[i]);
 		if (!res->images[i])
-		{
-			j = 0;
-			while (j < i)
-			{
-				mlx_delete_image(mlx, res->images[j]);
-				j++;
-			}
-			j = 0;
-			while (j < res->texture_count)
-			{
-				mlx_delete_texture(res->textures[j]);
-				j++;
-			}
-			free(res->images);
-			free(res->textures);
-			exit(1);
-		}
+			handle_error_cleanup(res, mlx, i, 0);
 		i++;
 	}
 }

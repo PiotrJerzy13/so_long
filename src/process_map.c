@@ -6,22 +6,14 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:33:53 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 11:39:11 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:12:08 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	process_map(t_map *map)
+void	initialize_map(t_map *map, char *line)
 {
-	char	*line;
-
-	line = get_next_line(map->fd);
-	if (!line)
-	{
-		ft_printf("Error: The map data is empty!\n");
-		exit(1);
-	}
 	line[ft_strlen(line) - 1] = '\0';
 	map->num_columns = ft_strlen(line);
 	map->current_row = 0;
@@ -29,10 +21,19 @@ void	process_map(t_map *map)
 	if (!map->map)
 	{
 		free(line);
-		ft_printf("Error: Memory allocation failed!\n");
-		exit(1);
+		ft_error(-2);
 	}
 	map->map[map->current_row++] = line;
+}
+
+void	process_map(t_map *map)
+{
+	char	*line;
+
+	line = get_next_line(map->fd);
+	if (!line)
+		ft_error(-1);
+	initialize_map(map, line);
 	count_map_elements(line, map);
 	read_lines(map);
 	close(map->fd);
@@ -69,27 +70,25 @@ void	cleanup_resources(t_Resources *res, mlx_t *mlx)
 {
 	int	i;
 
-	i = 0;
-	while (i < res->texture_count)
+	i = res->texture_count;
+	while (i--)
 	{
-		if (res->textures[i] != NULL)
+		if (res->textures[i])
 		{
 			mlx_delete_texture(res->textures[i]);
 			res->textures[i] = NULL;
 		}
-		i++;
 	}
 	free(res->textures);
 	res->textures = NULL;
-	i = 0;
-	while (i < res->image_count)
+	i = res->image_count;
+	while (i--)
 	{
-		if (res->images[i] != NULL)
+		if (res->images[i])
 		{
 			mlx_delete_image(mlx, res->images[i]);
 			res->images[i] = NULL;
 		}
-		i++;
 	}
 	free(res->images);
 	res->images = NULL;
@@ -100,29 +99,4 @@ void	close_window_and_cleanup(mlx_t *mlx, t_Resources *res, t_map *map)
 	cleanup_resources(res, mlx);
 	free_background_map(map);
 	mlx_terminate(mlx);
-}
-
-void	check_exit_reached(t_GameData *data)
-{
-	t_Character		*character;
-	t_Exit			*exit;
-	unsigned int	char_center_x;
-	unsigned int	char_center_y;
-
-	character = &data->character;
-	exit = &data->exit;
-	char_center_x = (unsigned int)(character->x + character->image->width / 2);
-	char_center_y = (unsigned int)(character->y + character->image->height / 2);
-	if (exit->opened)
-	{
-		if (char_center_x >= (unsigned int)exit->x
-			&& char_center_x <= (unsigned int)(exit->x + exit->image->width) &&
-			char_center_y >= (unsigned int)exit->y &&
-			char_center_y <= (unsigned int)(exit->y + exit->image->height))
-		{
-			ft_printf("CONGLATURATION.\n");
-			ft_printf("A WINNER IS YOU.\n");
-			mlx_close_window(character->mlx);
-		}
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:32:10 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 10:48:24 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:08:26 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,33 +80,28 @@ void	cleanup(mlx_t *mlx, t_Resources *res)
 {
 	int	i;
 
-	i = 0;
-	while (i < res->texture_count)
+	i = res->texture_count;
+	while (i--)
 	{
-		if (res->textures[i] != NULL)
+		if (res->textures[i])
 		{
 			mlx_delete_texture(res->textures[i]);
 			res->textures[i] = NULL;
 		}
-		i++;
 	}
 	free(res->textures);
-	i = 0;
-	while (i < res->image_count)
+	i = res->image_count;
+	while (i--)
 	{
-		if (res->images[i] != NULL)
+		if (res->images[i])
 		{
 			mlx_delete_image(mlx, res->images[i]);
 			res->images[i] = NULL;
 		}
-		i++;
 	}
 	free(res->images);
-	if (mlx != NULL)
-	{
+	if (mlx)
 		mlx_terminate(mlx);
-		mlx = NULL;
-	}
 }
 
 t_Position	find_element(char **map, char element, int height, int width)

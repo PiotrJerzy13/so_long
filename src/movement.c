@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:27:40 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 10:55:14 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:20:05 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,41 +95,31 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void	handle_movement(t_GameData *data, int new_col,
-	int new_row, int block_size)
+void	handle_movement(t_GameData *data, int new_col, int new_row,
+	int block_size)
 {
 	t_Character		*character;
-	t_Exit			*exit;
 	mlx_texture_t	*texture;
 
 	character = &data->character;
-	exit = &data->exit;
-	if (can_move_to(data->map, new_col, new_row, exit->opened))
+	if (!can_move_to(data->map, new_col, new_row, data->exit.opened))
+		return ;
+	character->x = new_col * block_size;
+	character->y = new_row * block_size;
+	data->move_count++;
+	if (character->image)
+		mlx_delete_image(character->mlx, character->image);
+	texture = mlx_load_png("text/idle.png");
+	if (texture)
 	{
-		character->x = new_col * block_size;
-		character->y = new_row * block_size;
-		data->move_count++;
-		if (character->image)
-		{
-			mlx_delete_image(character->mlx, character->image);
-			character->image = NULL;
-		}
-		texture = mlx_load_png("text/idle.png");
-		if (!texture)
-		{
-			ft_printf("Error loading character texture\n");
-			return ;
-		}
 		character->image = mlx_texture_to_image(character->mlx, texture);
-		if (!character->image)
-		{
-			ft_printf("Error converting texture to image\n");
-		}
+		if (character->image)
+			mlx_image_to_window(character->mlx, character->image, character->x,
+				character->y);
 		else
-		{
-			mlx_image_to_window(character->mlx, character->image,
-				character->x, character->y);
-		}
+			ft_printf("Error converting texture to image\n");
 		mlx_delete_texture(texture);
 	}
+	else
+		ft_printf("Error loading character texture\n");
 }
