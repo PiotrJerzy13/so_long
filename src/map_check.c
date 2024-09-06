@@ -6,25 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 14:32:58 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:33:26 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	free_map(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->current_row)
-	{
-		if (map->map[i])
-			free(map->map[i]);
-		i++;
-	}
-	free(map->map);
-}
 
 void	free_map_lines(t_map *map, int max_row)
 {

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:32:10 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 14:50:14 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:32:45 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,34 +62,6 @@ void	ft_error(int code)
 	exit(1);
 }
 
-void	cleanup(mlx_t *mlx, t_Resources *res)
-{
-	int	i;
-
-	i = res->texture_count;
-	while (i--)
-	{
-		if (res->textures[i])
-		{
-			mlx_delete_texture(res->textures[i]);
-			res->textures[i] = NULL;
-		}
-	}
-	free(res->textures);
-	i = res->image_count;
-	while (i--)
-	{
-		if (res->images[i])
-		{
-			mlx_delete_image(mlx, res->images[i]);
-			res->images[i] = NULL;
-		}
-	}
-	free(res->images);
-	if (mlx)
-		mlx_terminate(mlx);
-}
-
 void	cleanup_resources(t_Resources *res, mlx_t *mlx)
 {
 	int	i;
@@ -116,11 +88,4 @@ void	cleanup_resources(t_Resources *res, mlx_t *mlx)
 	}
 	free(res->images);
 	res->images = NULL;
-}
-
-void	close_window_and_cleanup(mlx_t *mlx, t_Resources *res, t_map *map)
-{
-	cleanup_resources(res, mlx);
-	free_background_map(map);
-	mlx_terminate(mlx);
 }

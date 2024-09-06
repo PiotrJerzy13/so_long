@@ -1,43 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra.c                                            :+:      :+:    :+:   */
+/*   map_initialization.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:44:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 14:44:58 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:33:45 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	calculate_map_dimensions(t_map *map)
-{
-	char	*line;
-	int		fd;
-
-	fd = 0;
-	map->height = 0;
-	map->width = 0;
-	line = get_next_line(fd);
-	fd = open(map->path, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_printf("Error: Failed to access map data!\n");
-		exit(1);
-	}
-	while (line != NULL)
-	{
-		if (map->width == 0)
-		{
-			map->width = ft_strlen(line) - 1;
-		}
-		map->height++;
-		free(line);
-	}
-	close(fd);
-}
 
 void	init_char_and_exit(mlx_t *mlx, t_GameData *data, t_map *map,
 		int block_size)

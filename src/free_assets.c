@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:40:36 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 14:45:22 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:33:04 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,6 @@ void	free_textures(mlx_texture_t **textures, int count)
 	{
 		if (textures[i])
 			mlx_delete_texture(textures[i]);
-		i++;
-	}
-}
-
-void	free_images(mlx_t *mlx, mlx_image_t **images, int count)
-{
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		if (images[i])
-			mlx_delete_image(mlx, images[i]);
 		i++;
 	}
 }

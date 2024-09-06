@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:16 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 15:05:57 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 16:33:59 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,6 @@ void	count_map_elements(char *line, t_map *map)
 			ft_error(-5);
 		line++;
 	}
-}
-
-void	add_line_to_map(char *line, t_map *map)
-{
-	char	**new_map;
-
-	new_map = (char **)ft_realloc(map->map,
-			(map->current_row) * sizeof(char *),
-			(map->current_row + 1) * sizeof(char *));
-	if (!new_map)
-	{
-		free(line);
-		ft_error(-2);
-	}
-	map->map = new_map;
-	map->map[map->current_row++] = line;
-	count_map_elements(line, map);
 }
 
 void	check_exit_reached(t_GameData *data)
