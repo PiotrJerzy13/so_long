@@ -5,91 +5,99 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/19 11:24:58 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/20 12:16:11 by pwojnaro         ###   ########.fr       */
+/*   Created: 2024/09/06 12:42:16 by pwojnaro          #+#    #+#             */
+/*   Updated: 2024/09/06 15:05:57 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	validate_elements(t_map *map)
+void	validate_args_and_load_map(int argc, char **argv, t_map *map)
 {
-	if (map->current_row < 3 || map->num_columns < 3)
+	if (argc < 2)
 	{
-		ft_printf("Error: The map is too small!\n");
+		ft_printf("Missing map path argument!\n");
 		exit(1);
 	}
-	if (map->coin_n == 0)
+	else if (argc > 2)
 	{
-		ft_printf("Error: Collectibles are missing from the map!\n");
+		ft_printf("Too many arguments!\n");
 		exit(1);
 	}
-	if (map->exit_n == 0)
+	*map = (t_map){0};
+	if (load_map(map, argv[1]) != 0)
 	{
-		ft_printf("Map Error: The map requires at least one exit point.\n");
-		exit(1);
-	}
-	if (map->player_n == 0)
-	{
-		ft_printf("Map Error: The map requires at least one player.\n");
+		ft_printf("Error loading the map!\n");
 		exit(1);
 	}
 }
 
-void	validate_top_walls(char *line, int num_columns, int is_top)
+void	count_map_elements(char *line, t_map *map)
 {
-	int	index;
-
-	index = 0;
-	while (index < num_columns)
+	while (*line)
 	{
-		if (line[index] != '1')
+		if (*line == 'C')
+			map->coin_n++;
+		else if (*line == 'P')
 		{
-			if (is_top)
-			{
-				ft_printf("Error: The top wall of the map is incomplete!\n");
-			}
-			else
-			{
-				ft_printf("Map Error: The bottom wall is incomplete!\n");
-			}
-			exit(1);
+			map->player_n++;
+			if (map->player_n > 1)
+				ft_error(-3);
 		}
-		index++;
+		else if (*line == 'E')
+		{
+			map->exit_n++;
+			if (map->exit_n > 1)
+				ft_error(-4);
+		}
+		else if (*line == '1')
+			map->wall_n++;
+		else if (*line == '0')
+			;
+		else
+			ft_error(-5);
+		line++;
 	}
 }
 
-void	validate_side_walls(char *line, int num_columns)
+void	add_line_to_map(char *line, t_map *map)
 {
-	if (line[0] != '1' || line[num_columns - 1] != '1')
+	char	**new_map;
+
+	new_map = (char **)ft_realloc(map->map,
+			(map->current_row) * sizeof(char *),
+			(map->current_row + 1) * sizeof(char *));
+	if (!new_map)
 	{
-		ft_printf("Error: The side walls of the map are incomplete!\n");
-		exit(1);
+		free(line);
+		ft_error(-2);
 	}
+	map->map = new_map;
+	map->map[map->current_row++] = line;
+	count_map_elements(line, map);
 }
 
-void	validate_map_walls(t_map *map)
+void	check_exit_reached(t_GameData *data)
 {
-	int	i;
+	t_Character		*character;
+	t_Exit			*exit;
+	unsigned int	char_center_x;
+	unsigned int	char_center_y;
 
-	i = 0;
-	while (i < map->height)
+	character = &data->character;
+	exit = &data->exit;
+	char_center_x = (unsigned int)(character->x + character->image->width / 2);
+	char_center_y = (unsigned int)(character->y + character->image->height / 2);
+	if (exit->opened)
 	{
-		validate_side_walls(map->map[i], map->width);
-		i++;
-	}
-}
-
-void	validate_walls(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	validate_top_walls(map->map[0], map->width, 1);
-	validate_top_walls(map->map[map->height - 1], map->width, 0);
-	while (i < map->height - 1)
-	{
-		validate_side_walls(map->map[i], map->width);
-		i++;
+		if (char_center_x >= (unsigned int)exit->x
+			&& char_center_x <= (unsigned int)(exit->x + exit->image->width) &&
+			char_center_y >= (unsigned int)exit->y &&
+			char_center_y <= (unsigned int)(exit->y + exit->image->height))
+		{
+			ft_printf("CONGLATURATION.\n");
+			ft_printf("A WINNER IS YOU.\n");
+			mlx_close_window(character->mlx);
+		}
 	}
 }

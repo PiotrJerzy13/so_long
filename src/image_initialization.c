@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image_block_gen.c                                  :+:      :+:    :+:   */
+/*   image_initialization.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 13:32:58 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:54:08 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,42 +41,6 @@ void	free_image_map(t_map *map, int max_r, int max_c)
 	free(map->img_map);
 }
 
-// void	initialize_image_map(t_map *map)
-// {
-// 	int	r;
-// 	int	c;
-
-// 	r = 0;
-// 	map->img_map = (mlx_image_t ****) ft_calloc(map->height,
-// 			sizeof(mlx_image_t ***));
-// 	if (!map->img_map)
-// 		ft_error(-2);
-// 	while (r < map->height)
-// 	{
-// 		map->img_map[r] = (mlx_image_t ***) ft_calloc(map->width,
-// 				sizeof(mlx_image_t **));
-// 		if (!map->img_map[r])
-// 		{
-// 			free_image_map(map, r, 0);
-// 			ft_error(-2);
-// 		}
-// 		c = 0;
-// 		while (c < map->width)
-// 		{
-// 			map->img_map[r][c] = (mlx_image_t **) ft_calloc(16,
-// 					sizeof(mlx_image_t *));
-// 			if (!map->img_map[r][c])
-// 			{
-// 				free_image_map(map, r + 1, c);
-// 				ft_error(-2);
-// 			}
-// 			c++;
-// 		}
-// 		r++;
-// 	}
-// }
-
-// Function to allocate each row in the image map
 void	allocate_image_map_row(mlx_image_t ***row, int width, t_map *map, int r)
 {
 	int	c;

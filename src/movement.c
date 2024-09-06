@@ -6,30 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:27:40 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 13:20:05 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:26:16 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	check_coin_collection(t_GameData *data)
-{
-	t_Character	*character;
-	t_Coin		*coin;
-	t_Exit		*exit_door;
-	int			i;
-
-	character = &data->character;
-	coin = data->coins;
-	exit_door = &data->exit;
-	i = 0;
-	while (i < data->coin_count)
-	{
-		check_and_collect_coin(character, &coin[i]);
-		i++;
-	}
-	exit_if_all(character, exit_door, data);
-}
 
 void	exit_if_all(t_Character *character, t_Exit *exit_door, t_GameData *data)
 {
@@ -57,69 +38,84 @@ void	exit_if_all(t_Character *character, t_Exit *exit_door, t_GameData *data)
 	}
 }
 
-void	check_and_collect_coin(t_Character *character, t_Coin *coin)
+int	can_move_to(t_map *map, int new_col, int new_row, int exit_opened)
 {
-	if (!coin->collected && character->x == coin->x && character->y == coin->y)
+	char	target;
+
+	if (new_row < 0 || new_row >= map->height
+		|| new_col < 0 || new_col >= map->width)
+		return (0);
+	target = map->map[new_row][new_col];
+	if (target == '1')
+		return (0);
+	if (target == 'E' && !exit_opened)
+		return (0);
+	return (1);
+}
+
+t_Position	find_element(char **map, char element, int height, int width)
+{
+	t_Position	pos;
+	int			row;
+	int			col;
+
+	pos.row = -1;
+	pos.col = -1;
+	row = 0;
+	while (row < height)
 	{
-		if (coin->image)
+		col = 0;
+		while (col < width)
 		{
-			mlx_delete_image(character->mlx, coin->image);
-			coin->image = NULL;
+			if (map[row][col] == element)
+			{
+				pos.row = row;
+				pos.col = col;
+				return (pos);
+			}
+			col++;
 		}
-		coin->collected = 1;
+		row++;
 	}
+	return (pos);
 }
 
-void	key_hook(mlx_key_data_t keydata, void *param)
+int	all_coins_collected(t_GameData *data)
 {
-	t_GameData	*data;
-	t_Character	*character;
-	int			new_col;
-	int			new_row;
+	int	i;
 
-	data = (t_GameData *)param;
-	character = &data->character;
-	new_col = character->x / BLOCK_SIZE;
-	new_row = character->y / BLOCK_SIZE;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	i = 0;
+	while (i < data->coin_count)
 	{
-		mlx_close_window(character->mlx);
+		if (!data->coins[i].collected)
+			return (0);
+		i++;
 	}
-	else if (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
-	{
-		update_position(keydata.key, &new_col, &new_row);
-		handle_movement(data, new_col, new_row, BLOCK_SIZE);
-		ft_printf("Moves: %d\n", data->move_count);
-		check_coin_collection(data);
-		check_exit_reached(data);
-	}
+	return (1);
 }
 
-void	handle_movement(t_GameData *data, int new_col, int new_row,
-	int block_size)
+void	iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map)
 {
-	t_Character		*character;
-	mlx_texture_t	*texture;
+	int	row;
+	int	col;
+	int	coin_index;
 
-	character = &data->character;
-	if (!can_move_to(data->map, new_col, new_row, data->exit.opened))
-		return ;
-	character->x = new_col * block_size;
-	character->y = new_row * block_size;
-	data->move_count++;
-	if (character->image)
-		mlx_delete_image(character->mlx, character->image);
-	texture = mlx_load_png("text/idle.png");
-	if (texture)
+	row = 0;
+	col = 0;
+	coin_index = 0;
+	while (row < map->height)
 	{
-		character->image = mlx_texture_to_image(character->mlx, texture);
-		if (character->image)
-			mlx_image_to_window(character->mlx, character->image, character->x,
-				character->y);
-		else
-			ft_printf("Error converting texture to image\n");
-		mlx_delete_texture(texture);
+		while (col < map->width)
+		{
+			if (map->map[row][col] == 'C')
+			{
+				initialize_coin(mlx, &data->coins[coin_index],
+					col * BLOCK_SIZE, row * BLOCK_SIZE);
+				coin_index++;
+			}
+			col++;
+		}
+		col = 0;
+		row++;
 	}
-	else
-		ft_printf("Error loading character texture\n");
 }

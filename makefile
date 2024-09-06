@@ -21,7 +21,7 @@ LIB_MLX := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 SRC_MLX := $(shell find ./src -iname "*.c")
 OBJ_MLX := ${SRC_MLX:.c=.o}
 
-SRCS = main.c init.c render.c movement.c map_check.c cleaning.c image_block_gen.c utils.c helper_function.c helper_function2.c validation.c process_map.c validation2.c	validation3.c
+SRCS = error_cleaning.c event_handling.c flood_fill.c free_assets.c free_map.c game_initialization.c coins_initialization.c image_initialization.c main.c map_check.c map_initialization.c movement.c render.c validation.c validate_elements.c
 
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)
 

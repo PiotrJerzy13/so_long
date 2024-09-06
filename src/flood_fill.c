@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_map.c                                      :+:      :+:    :+:   */
+/*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:33:53 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 13:12:08 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:31:22 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	initialize_map(t_map *map, char *line)
-{
-	line[ft_strlen(line) - 1] = '\0';
-	map->num_columns = ft_strlen(line);
-	map->current_row = 0;
-	map->map = (char **)ft_calloc(1, sizeof(char *));
-	if (!map->map)
-	{
-		free(line);
-		ft_error(-2);
-	}
-	map->map[map->current_row++] = line;
-}
 
 void	process_map(t_map *map)
 {
@@ -66,37 +52,55 @@ void	count_coins(t_map_data *map_data)
 	}
 }
 
-void	cleanup_resources(t_Resources *res, mlx_t *mlx)
+void	perform_flood_fill(t_map_data *map_data)
 {
-	int	i;
+	int	row;
+	int	col;
 
-	i = res->texture_count;
-	while (i--)
+	row = 0;
+	map_data->reachable_coins = 0;
+	map_data->exit_reachable = 0;
+	while (row < map_data->height)
 	{
-		if (res->textures[i])
+		col = 0;
+		while (col < map_data->width)
 		{
-			mlx_delete_texture(res->textures[i]);
-			res->textures[i] = NULL;
+			if (map_data->map[row][col] == 'P')
+			{
+				flood_fill(row, col, map_data);
+				return ;
+			}
+			col++;
 		}
+		row++;
 	}
-	free(res->textures);
-	res->textures = NULL;
-	i = res->image_count;
-	while (i--)
-	{
-		if (res->images[i])
-		{
-			mlx_delete_image(mlx, res->images[i]);
-			res->images[i] = NULL;
-		}
-	}
-	free(res->images);
-	res->images = NULL;
 }
 
-void	close_window_and_cleanup(mlx_t *mlx, t_Resources *res, t_map *map)
+void	map_flood_fill(t_map_data *map_data)
 {
-	cleanup_resources(res, mlx);
-	free_background_map(map);
-	mlx_terminate(mlx);
+	count_coins(map_data);
+	perform_flood_fill(map_data);
+	if (!(map_data->reachable_coins == map_data->total_coins
+			&& map_data->exit_reachable))
+	{
+		ft_printf("Map is invalid.\n");
+		exit(1);
+	}
+}
+
+void	flood_fill(int row, int col, t_map_data *map_data)
+{
+	if (row < 0 || col < 0 || row >= map_data->height || col >= map_data->width)
+		return ;
+	if (map_data->map[row][col] == '1' || map_data->map[row][col] == 'F')
+		return ;
+	if (map_data->map[row][col] == 'C')
+		map_data->reachable_coins++;
+	if (map_data->map[row][col] == 'E')
+		map_data->exit_reachable = 1;
+	map_data->map[row][col] = 'F';
+	flood_fill(row - 1, col, map_data);
+	flood_fill(row + 1, col, map_data);
+	flood_fill(row, col - 1, map_data);
+	flood_fill(row, col + 1, map_data);
 }

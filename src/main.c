@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 11:36:06 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:30:47 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,6 @@ void	setup_game(t_map *map, mlx_t *mlx, t_Resources *res)
 		exit(1);
 	}
 	render_background_and_walls(mlx, res->images[0], res->block_img, map);
-}
-
-void	flood_fill(int row, int col, t_map_data *map_data)
-{
-	if (row < 0 || col < 0 || row >= map_data->height || col >= map_data->width)
-		return ;
-	if (map_data->map[row][col] == '1' || map_data->map[row][col] == 'F')
-		return ;
-	if (map_data->map[row][col] == 'C')
-		map_data->reachable_coins++;
-	if (map_data->map[row][col] == 'E')
-		map_data->exit_reachable = 1;
-	map_data->map[row][col] = 'F';
-	flood_fill(row - 1, col, map_data);
-	flood_fill(row + 1, col, map_data);
-	flood_fill(row, col - 1, map_data);
-	flood_fill(row, col + 1, map_data);
 }
 
 void	setup_and_validate_game(mlx_t *mlx, t_map *map,

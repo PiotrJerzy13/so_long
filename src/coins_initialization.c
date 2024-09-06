@@ -1,16 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper_function2.c                                 :+:      :+:    :+:   */
+/*   helper_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 15:26:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/05 18:44:19 by pwojnaro         ###   ########.fr       */
+/*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
+/*   Updated: 2024/09/06 14:54:16 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	free_coins(t_Coin *coins, int coin_count, mlx_t *mlx)
+{
+	int	i;
+
+	i = 0;
+	while (i < coin_count)
+	{
+		if (coins[i].image)
+		{
+			mlx_delete_image(mlx, coins[i].image);
+			coins[i].image = NULL;
+		}
+		i++;
+	}
+}
+
+int	load_map(t_map *map, char *file_path)
+{
+	int			row;
+	t_Position	player_pos;
+
+	row = 0;
+	map->path = file_path;
+	validate_file_extension(map);
+	process_map(map);
+	while (row < map->height)
+	{
+		row++;
+	}
+	player_pos = find_element(map->map, 'P', map->height, map->width);
+	if (player_pos.row == -1 || player_pos.col == -1)
+	{
+		ft_printf("Error: Player 'P' not found in the loaded map\n");
+		exit(1);
+	}
+	return (0);
+}
 
 void	allocate_and_initialize_coins(t_GameData *data, t_map *map)
 {
@@ -21,22 +59,6 @@ void	allocate_and_initialize_coins(t_GameData *data, t_map *map)
 		ft_printf("Failed to allocate memory for coins.\n");
 		exit(1);
 	}
-}
-
-t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
-{
-	t_GameData	data;
-	int			block_size;
-
-	data.mlx = mlx;
-	data.map = map;
-	data.res = res;
-	data.move_count = 0;
-	block_size = BLOCK_SIZE;
-	init_char_and_exit(mlx, &data, map, block_size);
-	allocate_and_initialize_coins(&data, map);
-	iterate_and_populate(mlx, &data, map);
-	return (data);
 }
 
 void	validate_file_extension(t_map *map)
@@ -55,42 +77,6 @@ void	validate_file_extension(t_map *map)
 	else if (map->fd == 0)
 	{
 		ft_printf("Error: The map is empty!\n");
-		exit(1);
-	}
-}
-
-void	perform_flood_fill(t_map_data *map_data)
-{
-	int	row;
-	int	col;
-
-	row = 0;
-	map_data->reachable_coins = 0;
-	map_data->exit_reachable = 0;
-	while (row < map_data->height)
-	{
-		col = 0;
-		while (col < map_data->width)
-		{
-			if (map_data->map[row][col] == 'P')
-			{
-				flood_fill(row, col, map_data);
-				return ;
-			}
-			col++;
-		}
-		row++;
-	}
-}
-
-void	map_flood_fill(t_map_data *map_data)
-{
-	count_coins(map_data);
-	perform_flood_fill(map_data);
-	if (!(map_data->reachable_coins == map_data->total_coins
-			&& map_data->exit_reachable))
-	{
-		ft_printf("Map is invalid.\n");
 		exit(1);
 	}
 }

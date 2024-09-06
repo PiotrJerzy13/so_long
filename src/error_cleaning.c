@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   error_cleaning.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:32:10 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 13:08:26 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:50:14 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,6 @@ void	ft_error(int code)
 	exit(1);
 }
 
-int	all_coins_collected(t_GameData *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->coin_count)
-	{
-		if (!data->coins[i].collected)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	cleanup(mlx_t *mlx, t_Resources *res)
 {
 	int	i;
@@ -104,29 +90,37 @@ void	cleanup(mlx_t *mlx, t_Resources *res)
 		mlx_terminate(mlx);
 }
 
-t_Position	find_element(char **map, char element, int height, int width)
+void	cleanup_resources(t_Resources *res, mlx_t *mlx)
 {
-	t_Position	pos;
-	int			row;
-	int			col;
+	int	i;
 
-	pos.row = -1;
-	pos.col = -1;
-	row = 0;
-	while (row < height)
+	i = res->texture_count;
+	while (i--)
 	{
-		col = 0;
-		while (col < width)
+		if (res->textures[i])
 		{
-			if (map[row][col] == element)
-			{
-				pos.row = row;
-				pos.col = col;
-				return (pos);
-			}
-			col++;
+			mlx_delete_texture(res->textures[i]);
+			res->textures[i] = NULL;
 		}
-		row++;
 	}
-	return (pos);
+	free(res->textures);
+	res->textures = NULL;
+	i = res->image_count;
+	while (i--)
+	{
+		if (res->images[i])
+		{
+			mlx_delete_image(mlx, res->images[i]);
+			res->images[i] = NULL;
+		}
+	}
+	free(res->images);
+	res->images = NULL;
+}
+
+void	close_window_and_cleanup(mlx_t *mlx, t_Resources *res, t_map *map)
+{
+	cleanup_resources(res, mlx);
+	free_background_map(map);
+	mlx_terminate(mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 13:27:30 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:32:58 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,34 +78,3 @@ void	read_lines(t_map *map)
 		line = get_next_line(map->fd);
 	}
 }
-
-// void	read_lines(t_map *map)
-// {
-// 	char	*line;
-// 	size_t	line_length;
-
-// 	line = get_next_line(map->fd);
-// 	while (line)
-// 	{
-// 		if (line[ft_strlen(line) - 1] == '\n')
-// 			line[ft_strlen(line) - 1] = '\0';
-// 		line_length = ft_strlen(line);
-// 		if (line_length != (size_t)map->num_columns)
-// 		{
-// 			free(line);
-// 			free_map_lines(map, map->current_row);
-// 		}
-// 		map->map = (char **)ft_realloc(map->map,
-// 				(map->current_row) * sizeof(char *),
-// 				(map->current_row + 1) * sizeof(char *));
-// 		if (!map->map)
-// 		{
-// 			free(line);
-// 			free_map_lines(map, map->current_row);
-// 			ft_error(2);
-// 		}
-// 		map->map[map->current_row++] = line;
-// 		count_map_elements(line, map);
-// 		line = get_next_line(map->fd);
-// 	}
-// }

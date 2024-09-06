@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:51:03 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 09:59:40 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 14:15:07 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,29 +82,15 @@ void	render_game_objects(mlx_t *mlx, t_GameData *data)
 	}
 }
 
-void	calculate_map_dimensions(t_map *map)
+void	initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
 {
-	char	*line;
-	int		fd;
-
-	fd = 0;
-	map->height = 0;
-	map->width = 0;
-	line = get_next_line(fd);
-	fd = open(map->path, O_RDONLY);
-	if (fd < 0)
+	coin->image = create_image(mlx, "text/coin.png");
+	if (!coin->image)
 	{
-		ft_printf("Error: Failed to access map data!\n");
+		ft_printf("Failed to load coin image\n");
 		exit(1);
 	}
-	while (line != NULL)
-	{
-		if (map->width == 0)
-		{
-			map->width = ft_strlen(line) - 1;
-		}
-		map->height++;
-		free(line);
-	}
-	close(fd);
+	coin->x = x;
+	coin->y = y;
+	coin->collected = 0;
 }
