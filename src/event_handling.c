@@ -6,11 +6,26 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:24:58 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:18:38 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/09 09:26:17 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	can_move_to(t_map *map, int new_col, int new_row, int exit_opened)
+{
+	char	target;
+
+	if (new_row < 0 || new_row >= map->height
+		|| new_col < 0 || new_col >= map->width)
+		return (0);
+	target = map->map[new_row][new_col];
+	if (target == '1')
+		return (0);
+	if (target == 'E' && !exit_opened)
+		return (0);
+	return (1);
+}
 
 void	check_coin_collection(t_GameData *data)
 {
@@ -95,17 +110,4 @@ void	handle_movement(t_GameData *data, int new_col, int new_row,
 	}
 	else
 		ft_printf("Error loading character texture\n");
-}
-
-void	check_and_collect_coin(t_Character *character, t_Coin *coin)
-{
-	if (!coin->collected && character->x == coin->x && character->y == coin->y)
-	{
-		if (coin->image)
-		{
-			mlx_delete_image(character->mlx, coin->image);
-			coin->image = NULL;
-		}
-		coin->collected = 1;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:44:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:33:45 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/08 10:21:47 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,57 @@ void	initialize_map(t_map *map, char *line)
 		ft_error(-2);
 	}
 	map->map[map->current_row++] = line;
+}
+
+void	iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map)
+{
+	int	row;
+	int	col;
+	int	coin_index;
+
+	row = 0;
+	col = 0;
+	coin_index = 0;
+	while (row < map->height)
+	{
+		while (col < map->width)
+		{
+			if (map->map[row][col] == 'C')
+			{
+				initialize_coin(mlx, &data->coins[coin_index],
+					col * BLOCK_SIZE, row * BLOCK_SIZE);
+				coin_index++;
+			}
+			col++;
+		}
+		col = 0;
+		row++;
+	}
+}
+
+t_Position	find_element(char **map, char element, int height, int width)
+{
+	t_Position	pos;
+	int			row;
+	int			col;
+
+	pos.row = -1;
+	pos.col = -1;
+	row = 0;
+	while (row < height)
+	{
+		col = 0;
+		while (col < width)
+		{
+			if (map[row][col] == element)
+			{
+				pos.row = row;
+				pos.col = col;
+				return (pos);
+			}
+			col++;
+		}
+		row++;
+	}
+	return (pos);
 }

@@ -18,7 +18,7 @@ SRCS = \
 	ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
 	ft_putendl_fd.c ft_putnbr_fd.c ft_utoa_base.c \
 	ft_printf.c ft_putunsignednbr_fd.c print_hex.c \
-	get_next_line.c ft_strleni.c ft_realloc.c
+	get_next_line.c ft_strleni.c ft_realloc.c get_next_utils.c \
 
 # Object files
 OBJS = $(SRCS:%.c=$(OBJDIR)/%.o)

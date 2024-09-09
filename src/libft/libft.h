@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 20:35:20 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/07/18 23:08:03 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:51:40 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ int		ft_printf(const char *format_str, ...);
 int		ft_putunsignednbr_fd(unsigned int n, int fd);
 int		print_hex(unsigned long number, int upper, int fd);
 void	*ft_realloc(void *pointr, size_t original_size, size_t new_size);
+int		read_from_fd(int fd, char *storage, int *bytes_read);
+char	*store_and_join(char *line, char *storage);
 
 #endif

@@ -6,32 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:32:10 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:32:45 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/07 09:06:57 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	has_valid_extension(const char *path, const char *extension)
-{
-	int			path_len;
-	int			ext_len;
-	const char	*path_ext;
-
-	path_len = ft_strlen(path);
-	ext_len = ft_strlen(extension);
-	if (path_len < ext_len)
-		return (0);
-	path_ext = path + path_len - ext_len;
-	while (*extension)
-	{
-		if (*path_ext != *extension)
-			return (0);
-		path_ext++;
-		extension++;
-	}
-	return (1);
-}
 
 void	ft_error(int code)
 {
@@ -88,4 +67,20 @@ void	cleanup_resources(t_Resources *res, mlx_t *mlx)
 	}
 	free(res->images);
 	res->images = NULL;
+}
+
+void	free_coins(t_Coin *coins, int coin_count, mlx_t *mlx)
+{
+	int	i;
+
+	i = 0;
+	while (i < coin_count)
+	{
+		if (coins[i].image)
+		{
+			mlx_delete_image(mlx, coins[i].image);
+			coins[i].image = NULL;
+		}
+		i++;
+	}
 }

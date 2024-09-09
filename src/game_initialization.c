@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:36:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:23:28 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/06 19:02:04 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ mlx_image_t	*create_image(mlx_t *mlx, const char *path)
 	mlx_image_t		*image;
 
 	texture = load_texture(path);
-	if (!texture)
-	{
-		ft_printf("Failed to load texture: %s\n", path);
-		exit(1);
-	}
 	image = mlx_texture_to_image(mlx, texture);
 	if (!image)
 	{

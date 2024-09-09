@@ -6,26 +6,31 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:12:18 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/08 10:26:58 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_coins(t_Coin *coins, int coin_count, mlx_t *mlx)
+int	has_valid_extension(const char *path, const char *extension)
 {
-	int	i;
+	int			path_len;
+	int			ext_len;
+	const char	*path_ext;
 
-	i = 0;
-	while (i < coin_count)
+	path_len = ft_strlen(path);
+	ext_len = ft_strlen(extension);
+	if (path_len < ext_len)
+		return (0);
+	path_ext = path + path_len - ext_len;
+	while (*extension)
 	{
-		if (coins[i].image)
-		{
-			mlx_delete_image(mlx, coins[i].image);
-			coins[i].image = NULL;
-		}
-		i++;
+		if (*path_ext != *extension)
+			return (0);
+		path_ext++;
+		extension++;
 	}
+	return (1);
 }
 
 int	load_map(t_map *map, char *file_path)
@@ -42,11 +47,6 @@ int	load_map(t_map *map, char *file_path)
 		row++;
 	}
 	player_pos = find_element(map->map, 'P', map->height, map->width);
-	if (player_pos.row == -1 || player_pos.col == -1)
-	{
-		ft_printf("Error: Player 'P' not found in the loaded map\n");
-		exit(1);
-	}
 	return (0);
 }
 
@@ -61,6 +61,32 @@ void	allocate_and_initialize_coins(t_GameData *data, t_map *map)
 	}
 }
 
+void	exit_if_all(t_Character *character, t_Exit *exit_door, t_GameData *data)
+{
+	mlx_texture_t	*texture;
+
+	if (all_coins_collected(data))
+	{
+		if (exit_door->image)
+		{
+			mlx_delete_image(character->mlx, exit_door->image);
+			exit_door->image = NULL;
+		}
+		texture = mlx_load_png("text/exit_open.png");
+		if (!texture)
+		{
+			ft_printf("Error loading exit texture\n");
+			return ;
+		}
+		exit_door->image = mlx_texture_to_image(character->mlx, texture);
+		mlx_delete_texture(texture);
+		mlx_image_to_window(character->mlx,
+			exit_door->image, exit_door->x, exit_door->y);
+		exit_door->opened = 1;
+		ft_printf("Exit is open!\n");
+	}
+}
+
 void	validate_file_extension(t_map *map)
 {
 	if (!has_valid_extension(map->path, ".ber"))
@@ -69,14 +95,4 @@ void	validate_file_extension(t_map *map)
 		exit(1);
 	}
 	map->fd = open(map->path, O_RDONLY);
-	if (map->fd < 0)
-	{
-		ft_printf("Error: The map data is missing!\n");
-		exit(1);
-	}
-	else if (map->fd == 0)
-	{
-		ft_printf("Error: The map is empty!\n");
-		exit(1);
-	}
 }

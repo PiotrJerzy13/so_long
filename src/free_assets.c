@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:40:36 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:33:04 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/08 10:25:15 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,18 @@ void	handle_error_cleanup(t_Resources *res, mlx_t *mlx, int count,
 		free(res->textures);
 	}
 	exit(1);
+}
+
+void	free_map_lines(t_map *map, int max_row)
+{
+	int	i;
+
+	i = 0;
+	while (i < max_row)
+	{
+		if (map->map[i])
+			free(map->map[i]);
+		i++;
+	}
+	free(map->map);
 }

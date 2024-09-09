@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:16 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:33:59 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/09 18:13:49 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	validate_args_and_load_map(int argc, char **argv, t_map *map)
 	*map = (t_map){0};
 	if (load_map(map, argv[1]) != 0)
 	{
-		ft_printf("Error loading the map!\n");
 		exit(1);
 	}
 }

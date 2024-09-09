@@ -6,25 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:33:26 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/09 09:26:11 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	free_map_lines(t_map *map, int max_row)
-{
-	int	i;
-
-	i = 0;
-	while (i < max_row)
-	{
-		if (map->map[i])
-			free(map->map[i]);
-		i++;
-	}
-	free(map->map);
-}
 
 void	process_line(t_map *map, char *line)
 {
@@ -62,5 +48,32 @@ void	read_lines(t_map *map)
 		realloc_map(map);
 		process_line(map, line);
 		line = get_next_line(map->fd);
+	}
+}
+
+int	all_coins_collected(t_GameData *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->coin_count)
+	{
+		if (!data->coins[i].collected)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	check_and_collect_coin(t_Character *character, t_Coin *coin)
+{
+	if (!coin->collected && character->x == coin->x && character->y == coin->y)
+	{
+		if (coin->image)
+		{
+			mlx_delete_image(character->mlx, coin->image);
+			coin->image = NULL;
+		}
+		coin->collected = 1;
 	}
 }
