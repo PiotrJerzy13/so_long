@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 13:32:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/14 20:28:10 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:52:07 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,6 @@ void	validate_side_walls(const char *line, int num_columns)
 	{
 		ft_printf("Error: The side walls of the map are incomplete!\n");
 		exit(1);
-	}
-}
-
-void	validate_map_walls(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->height)
-	{
-		validate_side_walls(map->map[i], map->width);
-		i++;
 	}
 }
 

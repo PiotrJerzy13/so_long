@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/14 11:19:22 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:52:21 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ t_GameData		initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res);
 // Map processing and validation
 void			count_map_elements(char *line, t_map *map);
 void			validate_elements(t_map *map);
-void			validate_map_walls(t_map *map);
 void			validate_file_extension(t_map *map);
 void			validate_walls(t_map *map);
 void			validate_args_and_load_map(int argc, char **argv, t_map *map);

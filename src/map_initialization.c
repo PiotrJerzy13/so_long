@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:44:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/14 11:17:19 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:51:58 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	process_map(t_map *map)
 	map->height = map->current_row;
 	map->width = map->num_columns;
 	validate_walls(map);
-	validate_map_walls(map);
 	initialize_image_map(map);
 	initialize_background_map(map);
 }
