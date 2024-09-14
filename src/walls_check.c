@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_walls.c                                   :+:      :+:    :+:   */
+/*   walls_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 13:32:17 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/13 17:41:45 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:28:10 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	validate_top_walls(const char *line, int num_columns, int is_top)
+void	validate_top_bottom_walls(const char *line, int num_columns, int is_top)
 {
 	int	index;
 
@@ -61,8 +61,8 @@ void	validate_walls(t_map *map)
 	int	i;
 
 	i = 0;
-	validate_top_walls(map->map[0], map->width, 1);
-	validate_top_walls(map->map[map->height - 1], map->width, 0);
+	validate_top_bottom_walls(map->map[0], map->width, 1);
+	validate_top_bottom_walls(map->map[map->height - 1], map->width, 0);
 	while (i < map->height - 1)
 	{
 		validate_side_walls(map->map[i], map->width);
