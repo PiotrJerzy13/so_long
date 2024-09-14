@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   render_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:51:03 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:29:53 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 18:14:05 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	render_background(mlx_t *mlx, mlx_image_t *background_img)
 	}
 }
 
-void	render_walls(mlx_t *mlx, mlx_image_t *block_img, t_map *map)
+void	render_walls(mlx_t *mlx, mlx_image_t *block_img, const t_map *map)
 {
 	int	x;
 	int	y;
@@ -80,17 +80,4 @@ void	render_game_objects(mlx_t *mlx, t_GameData *data)
 		}
 		i++;
 	}
-}
-
-void	initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
-{
-	coin->image = create_image(mlx, "text/coin.png");
-	if (!coin->image)
-	{
-		ft_printf("Failed to load coin image\n");
-		exit(1);
-	}
-	coin->x = x;
-	coin->y = y;
-	coin->collected = 0;
 }

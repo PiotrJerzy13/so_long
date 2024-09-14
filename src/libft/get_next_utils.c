@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_util.c                                    :+:      :+:    :+:   */
+/*   get_next_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:49:19 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 18:49:49 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:32:05 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*store_and_join(char *line, char *storage)
+char	*store_and_join(char *line, const char *storage)
 {
 	char	*leftover;
 

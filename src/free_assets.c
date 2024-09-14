@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:40:36 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/08 10:25:15 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 18:13:25 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,6 @@ void	free_textures(mlx_texture_t **textures, int count)
 			mlx_delete_texture(textures[i]);
 		i++;
 	}
-}
-
-void	free_background_map(t_map *map)
-{
-	int	i;
-
-	if (!map->background_map)
-		return ;
-	i = 0;
-	while (i < map->height)
-	{
-		if (map->background_map[i])
-		{
-			free(map->background_map[i]);
-			map->background_map[i] = NULL;
-		}
-		i++;
-	}
-	free(map->background_map);
-	map->background_map = NULL;
 }
 
 void	handle_error_cleanup(t_Resources *res, mlx_t *mlx, int count,
@@ -68,16 +48,38 @@ void	handle_error_cleanup(t_Resources *res, mlx_t *mlx, int count,
 	exit(1);
 }
 
-void	free_map_lines(t_map *map, int max_row)
+void	free_coins(t_Coin *coins, int coin_count, mlx_t *mlx)
 {
 	int	i;
 
 	i = 0;
-	while (i < max_row)
+	while (i < coin_count)
 	{
-		if (map->map[i])
-			free(map->map[i]);
+		if (coins[i].image)
+		{
+			mlx_delete_image(mlx, coins[i].image);
+			coins[i].image = NULL;
+		}
 		i++;
 	}
-	free(map->map);
+}
+
+void	free_background_map(t_map *map)
+{
+	int	i;
+
+	if (!map->background_map)
+		return ;
+	i = 0;
+	while (i < map->height)
+	{
+		if (map->background_map[i])
+		{
+			free(map->background_map[i]);
+			map->background_map[i] = NULL;
+		}
+		i++;
+	}
+	free(map->background_map);
+	map->background_map = NULL;
 }

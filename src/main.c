@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/09 19:22:01 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 16:40:51 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int argc, char **argv)
 	mlx_t		*mlx;
 	t_GameData	data;
 
+	atexit(check_leaks);
 	validate_args_and_load_map(argc, argv, &map);
 	mlx = initialize_window(FIXED_WINDOW_WIDTH, FIXED_WINDOW_HEIGHT, "Window");
 	if (!mlx)

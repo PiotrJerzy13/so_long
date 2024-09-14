@@ -6,11 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:38:40 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/03/14 19:04:52 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:27:17 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n)
+int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
 	int	i;
 

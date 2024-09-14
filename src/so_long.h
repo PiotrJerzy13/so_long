@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/09 18:03:12 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:19:22 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ void			validate_file_extension(t_map *map);
 void			validate_walls(t_map *map);
 void			validate_args_and_load_map(int argc, char **argv, t_map *map);
 int				load_map(t_map *map, char *file_path);
-void			process_map(t_map *map);
 
 // Rendering functions
 void			render_background_and_walls(mlx_t *mlx,
@@ -127,21 +126,15 @@ void			render_game_objects(mlx_t *mlx, t_GameData *data);
 
 // Event handling and movement
 void			key_hook(mlx_key_data_t keydata, void *param);
-void			handle_movement(t_GameData *data, int new_col,
-					int new_row, int block_size);
-void			update_position(int key, int *new_col, int *new_row);
 
 // Coin and exit handling
-void			check_and_collect_coin(t_Character *character, t_Coin *coin);
 void			check_coin_collection(t_GameData *data);
 void			check_exit_reached(t_GameData *data);
-void			exit_if_all(t_Character *character,
-					t_Exit *exit_door, t_GameData *data);
-int				all_coins_collected(t_GameData *data);
+void			exit_if_all(t_Character *character, t_Exit *exit_door,
+					t_GameData *data);
+int				all_coins_collected(const t_GameData *data);
 
 // Flood fill and map validation
-void			perform_flood_fill(t_map_data *map_data);
-void			flood_fill(int row, int col, t_map_data *map_data);
 void			map_flood_fill(t_map_data *map_data);
 void			count_coins(t_map_data *map_data);
 t_Position		find_element(char **map, char element, int height, int width);
@@ -166,6 +159,7 @@ void			free_coins(t_Coin *coins, int coin_count, mlx_t *mlx);
 void			free_image_map(t_map *map, int max_r, int max_c);
 void			free_map_lines(t_map *map, int max_row);
 void			read_lines(t_map *map);
-void			initialize_map(t_map *map, char *line);
+void			free_map_resources(t_map *map);
+void			free_img_grid(t_map *map);
 
 #endif

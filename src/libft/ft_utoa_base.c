@@ -6,13 +6,13 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 20:24:19 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/03/21 21:13:05 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:30:35 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_utoa_base(unsigned long value, char *base)
+char	*ft_utoa_base(unsigned long value, const char *base)
 {
 	unsigned long	base_len;
 	char			*str;

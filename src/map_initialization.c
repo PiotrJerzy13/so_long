@@ -6,11 +6,48 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:44:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/08 10:21:47 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:17:19 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	initialize_map(t_map *map, char *line)
+{
+	if (line != NULL && ft_strlen(line) > 0)
+	{
+		line[ft_strlen(line) - 1] = '\0';
+	}
+	map->num_columns = ft_strlen(line);
+	map->current_row = 0;
+	map->map = (char **)ft_calloc(1, sizeof(char *));
+	if (!map->map)
+	{
+		free(line);
+		ft_error(-2);
+	}
+	map->map[map->current_row++] = line;
+}
+
+void	process_map(t_map *map)
+{
+	char	*line;
+
+	line = get_next_line(map->fd);
+	if (!line)
+		ft_error(-1);
+	initialize_map(map, line);
+	count_map_elements(line, map);
+	read_lines(map);
+	close(map->fd);
+	validate_elements(map);
+	map->height = map->current_row;
+	map->width = map->num_columns;
+	validate_walls(map);
+	validate_map_walls(map);
+	initialize_image_map(map);
+	initialize_background_map(map);
+}
 
 void	init_char_and_exit(mlx_t *mlx, t_GameData *data, t_map *map,
 		int block_size)
@@ -40,69 +77,28 @@ void	init_char_and_exit(mlx_t *mlx, t_GameData *data, t_map *map,
 	data->exit.opened = 0;
 }
 
-void	initialize_map(t_map *map, char *line)
+int	load_map(t_map *map, char *file_path)
 {
-	line[ft_strlen(line) - 1] = '\0';
-	map->num_columns = ft_strlen(line);
-	map->current_row = 0;
-	map->map = (char **)ft_calloc(1, sizeof(char *));
-	if (!map->map)
-	{
-		free(line);
-		ft_error(-2);
-	}
-	map->map[map->current_row++] = line;
-}
-
-void	iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map)
-{
-	int	row;
-	int	col;
-	int	coin_index;
+	int			row;
 
 	row = 0;
-	col = 0;
-	coin_index = 0;
+	map->path = file_path;
+	validate_file_extension(map);
+	process_map(map);
 	while (row < map->height)
 	{
-		while (col < map->width)
-		{
-			if (map->map[row][col] == 'C')
-			{
-				initialize_coin(mlx, &data->coins[coin_index],
-					col * BLOCK_SIZE, row * BLOCK_SIZE);
-				coin_index++;
-			}
-			col++;
-		}
-		col = 0;
 		row++;
 	}
+	return (0);
 }
 
-t_Position	find_element(char **map, char element, int height, int width)
+void	allocate_and_initialize_coins(t_GameData *data, t_map *map)
 {
-	t_Position	pos;
-	int			row;
-	int			col;
-
-	pos.row = -1;
-	pos.col = -1;
-	row = 0;
-	while (row < height)
+	data->coin_count = map->coin_n;
+	data->coins = (t_Coin *)ft_calloc(data->coin_count, sizeof(t_Coin));
+	if (!data->coins)
 	{
-		col = 0;
-		while (col < width)
-		{
-			if (map[row][col] == element)
-			{
-				pos.row = row;
-				pos.col = col;
-				return (pos);
-			}
-			col++;
-		}
-		row++;
+		ft_printf("Failed to allocate memory for coins.\n");
+		exit(1);
 	}
-	return (pos);
 }

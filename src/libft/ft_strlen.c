@@ -6,11 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 23:04:52 by pwojnaro          #+#    #+#             */
-/*   Updated: 2023/10/22 23:12:27 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:25:38 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	int	lenght;
 

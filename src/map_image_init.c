@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image_initialization.c                             :+:      :+:    :+:   */
+/*   map_image_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/08 10:23:52 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 18:13:17 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,33 +102,4 @@ void	initialize_background_map(t_map *map)
 		i++;
 	}
 	initialize_wall_map(map);
-}
-
-void	free_image_map(t_map *map, int max_r, int max_c)
-{
-	int	r;
-	int	c;
-	int	column_limit;
-
-	r = 0;
-	while (r < max_r)
-	{
-		if (map->img_map[r])
-		{
-			if (r == max_r - 1)
-				column_limit = max_c;
-			else
-				column_limit = map->width;
-			c = 0;
-			while (c < column_limit)
-			{
-				if (map->img_map[r][c])
-					free(map->img_map[r][c]);
-				c++;
-			}
-			free(map->img_map[r]);
-		}
-		r++;
-	}
-	free(map->img_map);
 }

@@ -1,44 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_cleaning.c                                   :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/19 11:32:10 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/07 09:06:57 by pwojnaro         ###   ########.fr       */
+/*   Created: 2024/09/13 17:56:45 by pwojnaro          #+#    #+#             */
+/*   Updated: 2024/09/13 18:11:06 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_error(int code)
+void	mlx_clean(t_map *map)
 {
-	if (code == -1)
+	if (map->mlx == NULL)
+		return ;
+	if (map->mlx->window != NULL)
 	{
-		ft_printf("Error: The map is not rectangular!\n");
+		mlx_close_window(map->mlx);
+		map->mlx->window = NULL;
 	}
-	else if (code == -2)
+	mlx_terminate(map->mlx);
+	map->mlx = NULL;
+}
+
+void	ft_clean(t_map *map)
+{
+	if (map != NULL)
 	{
-		ft_printf("Error: Memory allocation failed!\n");
+		free_map_resources(map);
+		free_img_grid(map);
+		mlx_clean(map);
 	}
-	else if (code == -3)
-	{
-		ft_printf("Error: More than one player 'P' found in the map!\n");
-	}
-	else if (code == -4)
-	{
-		ft_printf("Error: More than one exit 'E' found in the map!\n");
-	}
-	else if (code == -5)
-	{
-		ft_printf(" Unknown Symbol found in the map!\n");
-	}
-	else if (code == -6)
-	{
-		ft_printf("Error: Initialization failed!\n");
-	}
-	exit(1);
+	exit(0);
 }
 
 void	cleanup_resources(t_Resources *res, mlx_t *mlx)
@@ -67,20 +62,4 @@ void	cleanup_resources(t_Resources *res, mlx_t *mlx)
 	}
 	free(res->images);
 	res->images = NULL;
-}
-
-void	free_coins(t_Coin *coins, int coin_count, mlx_t *mlx)
-{
-	int	i;
-
-	i = 0;
-	while (i < coin_count)
-	{
-		if (coins[i].image)
-		{
-			mlx_delete_image(mlx, coins[i].image);
-			coins[i].image = NULL;
-		}
-		i++;
-	}
 }

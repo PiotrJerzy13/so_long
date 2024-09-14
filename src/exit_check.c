@@ -1,68 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation.c                                       :+:      :+:    :+:   */
+/*   exit_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:16 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/09 18:13:49 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 18:11:46 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	validate_args_and_load_map(int argc, char **argv, t_map *map)
-{
-	if (argc < 2)
-	{
-		ft_printf("Missing map path argument!\n");
-		exit(1);
-	}
-	else if (argc > 2)
-	{
-		ft_printf("Too many arguments!\n");
-		exit(1);
-	}
-	*map = (t_map){0};
-	if (load_map(map, argv[1]) != 0)
-	{
-		exit(1);
-	}
-}
-
-void	count_map_elements(char *line, t_map *map)
-{
-	while (*line)
-	{
-		if (*line == 'C')
-			map->coin_n++;
-		else if (*line == 'P')
-		{
-			map->player_n++;
-			if (map->player_n > 1)
-				ft_error(-3);
-		}
-		else if (*line == 'E')
-		{
-			map->exit_n++;
-			if (map->exit_n > 1)
-				ft_error(-4);
-		}
-		else if (*line == '1')
-			map->wall_n++;
-		else if (*line == '0')
-			;
-		else
-			ft_error(-5);
-		line++;
-	}
-}
-
 void	check_exit_reached(t_GameData *data)
 {
 	t_Character		*character;
-	t_Exit			*exit;
+	const t_Exit	*exit;
 	unsigned int	char_center_x;
 	unsigned int	char_center_y;
 
@@ -81,5 +34,31 @@ void	check_exit_reached(t_GameData *data)
 			ft_printf("A WINNER IS YOU.\n");
 			mlx_close_window(character->mlx);
 		}
+	}
+}
+
+void	exit_if_all(t_Character *character, t_Exit *exit_door, t_GameData *data)
+{
+	mlx_texture_t	*texture;
+
+	if (all_coins_collected(data))
+	{
+		if (exit_door->image)
+		{
+			mlx_delete_image(character->mlx, exit_door->image);
+			exit_door->image = NULL;
+		}
+		texture = mlx_load_png("text/exit_open.png");
+		if (!texture)
+		{
+			ft_printf("Error loading exit texture\n");
+			return ;
+		}
+		exit_door->image = mlx_texture_to_image(character->mlx, texture);
+		mlx_delete_texture(texture);
+		mlx_image_to_window(character->mlx,
+			exit_door->image, exit_door->x, exit_door->y);
+		exit_door->opened = 1;
+		ft_printf("Exit is open!\n");
 	}
 }

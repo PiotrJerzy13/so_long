@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:30:32 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/03/15 14:16:39 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:11:22 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_count_words(const char *s, char c)
 	{
 		while (*s == c)
 			s++;
-		if (*s && *s != c)
+		if (*s)
 		{
 			count++;
 			while (*s && *s != c)

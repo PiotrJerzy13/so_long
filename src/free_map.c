@@ -6,13 +6,13 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 19:32:22 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 16:22:23 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 18:13:36 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_img_array(mlx_image_t ***img, t_map *map)
+void	free_img_array(mlx_image_t ***img, const t_map *map)
 {
 	int	i;
 
@@ -36,11 +36,11 @@ void	free_map_resources(t_map *map)
 {
 	int	i;
 
+	i = 0;
 	if (map->fd != 0)
 		close(map->fd);
 	if (map->map != NULL)
 	{
-		i = 0;
 		while (i < map->height)
 		{
 			if (map->map[i] != NULL)
@@ -85,26 +85,45 @@ void	free_img_grid(t_map *map)
 	map->img_map = NULL;
 }
 
-void	mlx_clean(t_map *map)
+void	free_map_lines(t_map *map, int max_row)
 {
-	if (map->mlx == NULL)
-		return ;
-	if (map->mlx->window != NULL)
+	int	i;
+
+	i = 0;
+	while (i < max_row)
 	{
-		mlx_close_window(map->mlx);
-		map->mlx->window = NULL;
+		if (map->map[i])
+			free(map->map[i]);
+		i++;
 	}
-	mlx_terminate(map->mlx);
-	map->mlx = NULL;
+	free(map->map);
 }
 
-void	ft_clean(t_map *map)
+void	free_image_map(t_map *map, int max_r, int max_c)
 {
-	if (map != NULL)
+	int	r;
+	int	c;
+	int	column_limit;
+
+	r = 0;
+	while (r < max_r)
 	{
-		free_map_resources(map);
-		free_img_grid(map);
-		mlx_clean(map);
+		if (map->img_map[r])
+		{
+			if (r == max_r - 1)
+				column_limit = max_c;
+			else
+				column_limit = map->width;
+			c = 0;
+			while (c < column_limit)
+			{
+				if (map->img_map[r][c])
+					free(map->img_map[r][c]);
+				c++;
+			}
+			free(map->img_map[r]);
+		}
+		r++;
 	}
-	exit(0);
+	free(map->img_map);
 }

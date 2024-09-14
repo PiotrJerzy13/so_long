@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:10:01 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 18:50:49 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/13 10:31:45 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*read_and_store(int fd, int *bytes_read, char *line)
 	return (line);
 }
 
-int	end_of_line(char *line)
+int	end_of_line(const char *line)
 {
 	int	i;
 
@@ -49,7 +49,7 @@ int	end_of_line(char *line)
 	return (i);
 }
 
-char	*get_result(char *line, int bytes_read)
+char	*get_result(const char *line, int bytes_read)
 {
 	char	*result;
 	int		i;

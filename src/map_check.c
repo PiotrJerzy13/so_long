@@ -6,11 +6,39 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:26:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/09 09:26:11 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/14 11:09:35 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	count_map_elements(char *line, t_map *map)
+{
+	while (*line)
+	{
+		if (*line == 'C')
+			map->coin_n++;
+		else if (*line == 'P')
+		{
+			map->player_n++;
+			if (map->player_n > 1)
+				ft_error(-3);
+		}
+		else if (*line == 'E')
+		{
+			map->exit_n++;
+			if (map->exit_n > 1)
+				ft_error(-4);
+		}
+		else if (*line == '1')
+			map->wall_n++;
+		else if (*line == '0')
+			;
+		else
+			ft_error(-5);
+		line++;
+	}
+}
 
 void	process_line(t_map *map, char *line)
 {
@@ -48,32 +76,5 @@ void	read_lines(t_map *map)
 		realloc_map(map);
 		process_line(map, line);
 		line = get_next_line(map->fd);
-	}
-}
-
-int	all_coins_collected(t_GameData *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->coin_count)
-	{
-		if (!data->coins[i].collected)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	check_and_collect_coin(t_Character *character, t_Coin *coin)
-{
-	if (!coin->collected && character->x == coin->x && character->y == coin->y)
-	{
-		if (coin->image)
-		{
-			mlx_delete_image(character->mlx, coin->image);
-			coin->image = NULL;
-		}
-		coin->collected = 1;
 	}
 }
