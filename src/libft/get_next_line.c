@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 14:10:01 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/13 10:31:45 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:39:57 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,57 +51,57 @@ int	end_of_line(const char *line)
 
 char	*get_result(const char *line, int bytes_read)
 {
-	char	*result;
+	char	*res;
 	int		i;
 
 	i = 0;
 	if (!line[i])
 		return (NULL);
-	result = ft_calloc(bytes_read + 2, sizeof(char));
-	if (!result)
+	res = ft_calloc(bytes_read + 2, sizeof(char));
+	if (!res)
 		return (NULL);
-	while (line[i] != '\n' && line[i])
+	while (line[i] != '\n' && line[i] != '\0')
 	{
-		result[i] = line[i];
+		res[i] = line[i];
 		i++;
 	}
 	if (line[i] == '\n')
-		result[i] = '\n';
-	return (result);
+		res[i] = '\n';
+	return (res);
 }
 
-char	*allocate_new_line(char *line, int bytes_read)
+char	*new_line(char *line, int bytes)
 {
-	char	*new_line;
+	char	*new;
 	int		i;
 
 	i = 0;
-	if (!line[bytes_read])
+	if (!line || !line[bytes])
 	{
 		free(line);
 		return (NULL);
 	}
-	new_line = ft_calloc(ft_strlen(line) - bytes_read + 1, sizeof(char));
-	if (!new_line)
+	new = ft_calloc(ft_strlen(line) - bytes + 1, sizeof(char));
+	if (!new)
 		return (free(line), NULL);
-	bytes_read++;
-	while (line[bytes_read])
+	bytes ++;
+	while (line[bytes])
 	{
-		new_line[i] = line[bytes_read];
+		new[i] = line[bytes];
 		i++;
-		bytes_read++;
+		bytes++;
 	}
 	free(line);
-	return (new_line);
+	return (new);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*line;
-	char		*result;
-	int			bytes_read;
+	char		*res;
+	int			bytes;
 
-	bytes_read = 1;
+	bytes = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		if (line)
@@ -111,11 +111,11 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
-	line = read_and_store(fd, &bytes_read, line);
+	line = read_and_store(fd, &bytes, line);
 	if (!line)
 		return (NULL);
-	bytes_read = end_of_line(line);
-	result = get_result(line, bytes_read);
-	line = allocate_new_line(line, bytes_read);
-	return (result);
+	bytes = end_of_line(line);
+	res = get_result(line, bytes);
+	line = new_line(line, bytes);
+	return (res);
 }

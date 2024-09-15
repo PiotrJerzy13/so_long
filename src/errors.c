@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:39:39 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/13 18:22:56 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:45:24 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_error(int code)
 	exit(1);
 }
 
-void	validate_elements(t_map *map)
+void	validate_elements(const t_map *map)
 {
 	if (map->current_row < 3 || map->num_columns < 3)
 	{
