@@ -6,24 +6,11 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/14 10:56:17 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:28:48 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
-{
-	coin->image = create_image(mlx, "text/coin.png");
-	if (!coin->image)
-	{
-		ft_printf("Failed to load coin image\n");
-		exit(1);
-	}
-	coin->x = x;
-	coin->y = y;
-	coin->collected = 0;
-}
 
 void	check_and_delete_coin(t_Character *character, t_Coin *coin)
 {
@@ -54,7 +41,7 @@ void	check_coin_collection(t_GameData *data)
 		check_and_delete_coin(character, &coin[i]);
 		i++;
 	}
-	exit_if_all(character, exit_door, data);
+	check_exit_reached(data);
 }
 
 void	count_coins(t_map_data *map_data)

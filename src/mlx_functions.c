@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:36:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/06 19:02:04 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:12:44 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,49 +53,4 @@ mlx_image_t	*create_image(mlx_t *mlx, const char *path)
 	}
 	mlx_delete_texture(texture);
 	return (image);
-}
-
-void	load_resources(t_Resources *res, mlx_t *mlx)
-{
-	const char	*paths[] = {"text/4.png", "text/block1.png"};
-	int			i;
-
-	i = 0;
-	res->texture_count = 2;
-	res->image_count = 2;
-	res->textures = malloc(res->texture_count * sizeof(mlx_texture_t *));
-	res->images = malloc(res->image_count * sizeof(mlx_image_t *));
-	if (!res->textures || !res->images)
-		exit(1);
-	while (i < res->texture_count)
-	{
-		res->textures[i] = load_texture(paths[i]);
-		if (!res->textures[i])
-			handle_error_cleanup(res, mlx, i, 1);
-		i++;
-	}
-	i = 0;
-	while (i < res->image_count)
-	{
-		res->images[i] = create_image(mlx, paths[i]);
-		if (!res->images[i])
-			handle_error_cleanup(res, mlx, i, 0);
-		i++;
-	}
-}
-
-t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
-{
-	t_GameData	data;
-	int			block_size;
-
-	data.mlx = mlx;
-	data.map = map;
-	data.res = res;
-	data.move_count = 0;
-	block_size = BLOCK_SIZE;
-	init_char_and_exit(mlx, &data, map, block_size);
-	allocate_and_initialize_coins(&data, map);
-	iterate_and_populate(mlx, &data, map);
-	return (data);
 }

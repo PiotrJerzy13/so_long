@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/15 12:46:02 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 16:48:18 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_map
 	mlx_t				*mlx;
 	mlx_image_t			***background_map;
 	mlx_image_t			***wall_map;
-	mlx_image_t			****img_map;
+	mlx_image_t			***img_map;
 	char				*path;
 	int					fd;
 	int					player_n;
@@ -106,8 +106,7 @@ typedef struct s_map_data
 mlx_t			*initialize_window(int width, int height, const char *title);
 mlx_texture_t	*load_texture(const char *path);
 mlx_image_t		*create_image(mlx_t *mlx, const char *path);
-void			load_resources(t_Resources *res, mlx_t *mlx);
-t_GameData		initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res);
+void			load_text_to_array(t_Resources *res, mlx_t *mlx);
 
 // Map processing and validation
 void			count_map_elements(char *line, t_map *map);
@@ -129,23 +128,19 @@ void			key_hook(mlx_key_data_t keydata, void *param);
 // Coin and exit handling
 void			check_coin_collection(t_GameData *data);
 void			check_exit_reached(t_GameData *data);
-void			exit_if_all(t_Character *character, t_Exit *exit_door,
-					t_GameData *data);
 int				all_coins_collected(const t_GameData *data);
 
 // Flood fill and map validation
-void			map_flood_fill(t_map_data *map_data);
+void			start_flood_fill(t_map_data *map_data);
 void			count_coins(t_map_data *map_data);
 t_Position		find_element(char **map, char element, int height, int width);
 
 // Image and block generation
 void			initialize_image_map(t_map *map);
 void			initialize_background_map(t_map *map);
-void			init_char_and_exit(mlx_t *mlx, t_GameData *data,
+void			load_char_and_exit(mlx_t *mlx, t_GameData *data,
 					t_map *map, int block_size);
-void			initialize_coin(mlx_t *mlx, t_Coin *coin, int x, int y);
-void			iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map);
-void			allocate_and_initialize_coins(t_GameData *data, t_map *map);
+void			fill_coins_on_map(mlx_t *mlx, t_GameData *data, t_map *map);
 
 // Error handling and cleanup
 void			ft_error(int code);
@@ -160,5 +155,6 @@ void			free_map_lines(t_map *map, int max_row);
 void			read_lines(t_map *map);
 void			free_map_resources(t_map *map);
 void			free_img_grid(t_map *map);
+void			allocate_memory_coins(t_GameData *data, t_map *map);
 
 #endif

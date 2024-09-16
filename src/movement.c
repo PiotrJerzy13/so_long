@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:24:58 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/14 11:00:29 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:28:10 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,31 +91,4 @@ void	key_hook(mlx_key_data_t keydata, void *param)
 		check_coin_collection(data);
 		check_exit_reached(data);
 	}
-}
-
-t_Position	find_element(char **map, char element, int height, int width)
-{
-	t_Position	pos;
-	int			row;
-	int			col;
-
-	pos.row = -1;
-	pos.col = -1;
-	row = 0;
-	while (row < height)
-	{
-		col = 0;
-		while (col < width)
-		{
-			if (map[row][col] == element)
-			{
-				pos.row = row;
-				pos.col = col;
-				return (pos);
-			}
-			col++;
-		}
-		row++;
-	}
-	return (pos);
 }

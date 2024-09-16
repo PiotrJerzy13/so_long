@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:33:53 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/14 11:11:37 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:02:52 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	flood_fill(int row, int col, t_map_data *map_data)
 	flood_fill(row, col + 1, map_data);
 }
 
-void	perform_flood_fill(t_map_data *map_data)
+void	start_flood_fill(t_map_data *map_data)
 {
 	int	row;
 	int	col;
@@ -49,44 +49,6 @@ void	perform_flood_fill(t_map_data *map_data)
 			}
 			col++;
 		}
-		row++;
-	}
-}
-
-void	map_flood_fill(t_map_data *map_data)
-{
-	count_coins(map_data);
-	perform_flood_fill(map_data);
-	if (!(map_data->reachable_coins == map_data->total_coins
-			&& map_data->exit_reachable))
-	{
-		ft_printf("Map is invalid.\n");
-		exit(1);
-	}
-}
-
-void	iterate_and_populate(mlx_t *mlx, t_GameData *data, t_map *map)
-{
-	int	row;
-	int	col;
-	int	coin_index;
-
-	row = 0;
-	col = 0;
-	coin_index = 0;
-	while (row < map->height)
-	{
-		while (col < map->width)
-		{
-			if (map->map[row][col] == 'C')
-			{
-				initialize_coin(mlx, &data->coins[coin_index],
-					col * BLOCK_SIZE, row * BLOCK_SIZE);
-				coin_index++;
-			}
-			col++;
-		}
-		col = 0;
 		row++;
 	}
 }
