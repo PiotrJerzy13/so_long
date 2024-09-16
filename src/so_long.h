@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:27:05 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 16:48:18 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:18:40 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void			validate_file_extension(t_map *map);
 void			validate_walls(t_map *map);
 void			validate_args_and_load_map(int argc, char **argv, t_map *map);
 int				load_map(t_map *map, char *file_path);
+void			create_block(t_map *map, mlx_t *mlx, t_Resources *res);
 
 // Rendering functions
 void			render_background_and_walls(mlx_t *mlx,
@@ -156,5 +157,6 @@ void			read_lines(t_map *map);
 void			free_map_resources(t_map *map);
 void			free_img_grid(t_map *map);
 void			allocate_memory_coins(t_GameData *data, t_map *map);
+void			check_path(t_map_data *map_data);
 
 #endif

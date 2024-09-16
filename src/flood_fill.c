@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 11:33:53 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 14:02:52 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:10:53 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,17 @@ void	start_flood_fill(t_map_data *map_data)
 			col++;
 		}
 		row++;
+	}
+}
+
+void	check_path(t_map_data *map_data)
+{
+	count_coins(map_data);
+	start_flood_fill(map_data);
+	if (!(map_data->reachable_coins == map_data->total_coins
+			&& map_data->exit_reachable))
+	{
+		ft_printf("Map is invalid.\n");
+		exit(1);
 	}
 }

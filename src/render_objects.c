@@ -6,11 +6,22 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:51:03 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 14:25:39 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:17:41 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	create_block(t_map *map, mlx_t *mlx, t_Resources *res)
+{
+	res->block_img = create_image(mlx, "text/block1.png");
+	if (!res->block_img)
+	{
+		ft_printf("Failed to create block image\n");
+		exit(1);
+	}
+	render_background_and_walls(mlx, res->images[0], res->block_img, map);
+}
 
 void	render_background(mlx_t *mlx, mlx_image_t *background_img)
 {

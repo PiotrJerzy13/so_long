@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 15:43:54 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:23:55 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,17 @@ t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
 	return (data);
 }
 
-void	setup_game(t_map *map, mlx_t *mlx, t_Resources *res)
-{
-	res->block_img = create_image(mlx, "text/block1.png");
-	if (!res->block_img)
-	{
-		ft_printf("Failed to create block image\n");
-		exit(1);
-	}
-	render_background_and_walls(mlx, res->images[0], res->block_img, map);
-}
-
 void	setup_and_validate_game(mlx_t *mlx, t_map *map,
 	t_Resources *res, t_GameData *data)
 {
 	t_map_data	map_data;
 
-	setup_game(map, mlx, res);
+	create_block(map, mlx, res);
 	*data = initialize_game_data(mlx, map, res);
-	load_char_and_exit(mlx, data, map, BLOCK_SIZE);
 	map_data.map = map->map;
 	map_data.height = map->height;
 	map_data.width = map->width;
-	start_flood_fill(&map_data);
+	check_path(&map_data);
 }
 
 int	main(int argc, char **argv)
@@ -65,14 +53,12 @@ int	main(int argc, char **argv)
 	mlx_t		*mlx;
 	t_GameData	data;
 
-	atexit(check_leaks);
 	validate_args_and_load_map(argc, argv, &map);
 	mlx = initialize_window(FIXED_WINDOW_WIDTH, FIXED_WINDOW_HEIGHT, "Window");
 	if (!mlx)
 		ft_error(6);
 	load_text_to_array(&res, mlx);
 	setup_and_validate_game(mlx, &map, &res, &data);
-	fill_coins_on_map(mlx, &data, &map);
 	render_game_objects(mlx, &data);
 	mlx_key_hook(mlx, key_hook, &data);
 	mlx_loop(mlx);
