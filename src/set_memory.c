@@ -6,16 +6,16 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:18:07 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 16:48:50 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:50:49 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	allocate_memory_coins(t_GameData *data, t_map *map)
+void	allocate_memory_coins(t_game_data *data, t_map *map)
 {
 	data->coin_count = map->coin_n;
-	data->coins = (t_Coin *)ft_calloc(data->coin_count, sizeof(t_Coin));
+	data->coins = (t_coin *)ft_calloc(data->coin_count, sizeof(t_coin));
 	if (!data->coins)
 	{
 		ft_printf("Failed to allocate memory for coins.\n");

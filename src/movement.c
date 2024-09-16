@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 11:24:58 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 15:28:10 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:55:11 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	update_position(int key, int *new_col, int *new_row)
 		(*new_row)++;
 }
 
-void	handle_movement(t_GameData *data, int new_col, int new_row,
+void	handle_movement(t_game_data *data, int new_col, int new_row,
 	int block_size)
 {
-	t_Character		*character;
+	t_character		*character;
 	mlx_texture_t	*texture;
 
 	character = &data->character;
@@ -70,12 +70,12 @@ void	handle_movement(t_GameData *data, int new_col, int new_row,
 
 void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	t_GameData	*data;
-	t_Character	*character;
+	t_game_data	*data;
+	t_character	*character;
 	int			new_col;
 	int			new_row;
 
-	data = (t_GameData *)param;
+	data = (t_game_data *)param;
 	character = &data->character;
 	new_col = character->x / BLOCK_SIZE;
 	new_row = character->y / BLOCK_SIZE;

@@ -6,13 +6,13 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 20:51:03 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 17:17:41 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:53:56 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	create_block(t_map *map, mlx_t *mlx, t_Resources *res)
+void	create_block(t_map *map, mlx_t *mlx, t_resources *res)
 {
 	res->block_img = create_image(mlx, "text/block1.png");
 	if (!res->block_img)
@@ -70,7 +70,7 @@ void	render_background_and_walls(mlx_t *mlx, mlx_image_t *background_img,
 	render_walls(mlx, block_img, map);
 }
 
-void	render_game_objects(mlx_t *mlx, t_GameData *data)
+void	render_game_objects(mlx_t *mlx, t_game_data *data)
 {
 	int	i;
 

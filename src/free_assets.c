@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:40:36 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/13 18:13:25 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:51:28 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_textures(mlx_texture_t **textures, int count)
 	}
 }
 
-void	handle_error_cleanup(t_Resources *res, mlx_t *mlx, int count,
+void	handle_error_cleanup(t_resources *res, mlx_t *mlx, int count,
 	int is_texture)
 {
 	int	j;
@@ -48,7 +48,7 @@ void	handle_error_cleanup(t_Resources *res, mlx_t *mlx, int count,
 	exit(1);
 }
 
-void	free_coins(t_Coin *coins, int coin_count, mlx_t *mlx)
+void	free_coins(t_coin *coins, int coin_count, mlx_t *mlx)
 {
 	int	i;
 

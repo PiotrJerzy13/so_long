@@ -6,15 +6,15 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:39:29 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 15:44:06 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 18:04:19 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-t_Position	find_element(char **map, char element, int height, int width)
+t_position	find_element(char **map, char element, int height, int width)
 {
-	t_Position	pos;
+	t_position	pos;
 	int			row;
 	int			col;
 
@@ -39,7 +39,7 @@ t_Position	find_element(char **map, char element, int height, int width)
 	return (pos);
 }
 
-void	load_text_to_array(t_Resources *res, mlx_t *mlx)
+void	load_text_to_array(t_resources *res, mlx_t *mlx)
 {
 	const char	*paths[] = {"text/4.png", "text/block1.png"};
 	int			i;
@@ -68,7 +68,7 @@ void	load_text_to_array(t_Resources *res, mlx_t *mlx)
 	}
 }
 
-void	initialize_single_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
+void	initialize_single_coin(mlx_t *mlx, t_coin *coin, int x, int y)
 {
 	coin->image = create_image(mlx, "text/coin.png");
 	if (!coin->image)
@@ -81,7 +81,7 @@ void	initialize_single_coin(mlx_t *mlx, t_Coin *coin, int x, int y)
 	coin->collected = 0;
 }
 
-void	fill_coins_on_map(mlx_t *mlx, t_GameData *data, t_map *map)
+void	fill_coins_on_map(mlx_t *mlx, t_game_data *data, t_map *map)
 {
 	int	row;
 	int	col;
@@ -107,11 +107,11 @@ void	fill_coins_on_map(mlx_t *mlx, t_GameData *data, t_map *map)
 	}
 }
 
-void	load_char_and_exit(mlx_t *mlx, t_GameData *data, t_map *map,
+void	load_char_and_exit(mlx_t *mlx, t_game_data *data, t_map *map,
 		int block_size)
 {
-	t_Position	player_pos;
-	t_Position	exit_pos;
+	t_position	player_pos;
+	t_position	exit_pos;
 
 	player_pos = find_element(map->map, 'P', map->height, map->width);
 	exit_pos = find_element(map->map, 'E', map->height, map->width);

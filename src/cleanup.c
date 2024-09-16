@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:56:45 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/13 18:11:06 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:51:08 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_clean(t_map *map)
 	exit(0);
 }
 
-void	cleanup_resources(t_Resources *res, mlx_t *mlx)
+void	cleanup_resources(t_resources *res, mlx_t *mlx)
 {
 	int	i;
 

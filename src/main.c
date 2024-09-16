@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 19:34:00 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 17:23:55 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:53:26 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	check_leaks(void)
 	system("leaks so_long");
 }
 
-t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
+t_game_data	initialize_game_data(mlx_t *mlx, t_map *map, t_resources *res)
 {
-	t_GameData	data;
+	t_game_data	data;
 	int			block_size;
 
 	data.mlx = mlx;
@@ -34,7 +34,7 @@ t_GameData	initialize_game_data(mlx_t *mlx, t_map *map, t_Resources *res)
 }
 
 void	setup_and_validate_game(mlx_t *mlx, t_map *map,
-	t_Resources *res, t_GameData *data)
+	t_resources *res, t_game_data *data)
 {
 	t_map_data	map_data;
 
@@ -49,9 +49,9 @@ void	setup_and_validate_game(mlx_t *mlx, t_map *map,
 int	main(int argc, char **argv)
 {
 	t_map		map;
-	t_Resources	res;
+	t_resources	res;
 	mlx_t		*mlx;
-	t_GameData	data;
+	t_game_data	data;
 
 	validate_args_and_load_map(argc, argv, &map);
 	mlx = initialize_window(FIXED_WINDOW_WIDTH, FIXED_WINDOW_HEIGHT, "Window");

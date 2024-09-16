@@ -6,16 +6,16 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 12:42:16 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 13:12:18 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:54:27 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_exit_reached(t_GameData *data)
+void	check_exit_reached(t_game_data *data)
 {
-	t_Character		*character;
-	t_Exit			*exit;
+	t_character		*character;
+	t_exit			*exit;
 	unsigned int	char_center_x;
 	unsigned int	char_center_y;
 

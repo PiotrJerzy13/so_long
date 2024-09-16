@@ -6,13 +6,13 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 14:28:48 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:52:13 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_and_delete_coin(t_Character *character, t_Coin *coin)
+void	check_and_delete_coin(t_character *character, t_coin *coin)
 {
 	if (!coin->collected && character->x == coin->x && character->y == coin->y)
 	{
@@ -25,11 +25,11 @@ void	check_and_delete_coin(t_Character *character, t_Coin *coin)
 	}
 }
 
-void	check_coin_collection(t_GameData *data)
+void	check_coin_collection(t_game_data *data)
 {
-	t_Character	*character;
-	t_Coin		*coin;
-	t_Exit		*exit_door;
+	t_character	*character;
+	t_coin		*coin;
+	t_exit		*exit_door;
 	int			i;
 
 	character = &data->character;
@@ -64,7 +64,7 @@ void	count_coins(t_map_data *map_data)
 	}
 }
 
-int	all_coins_collected(const t_GameData *data)
+int	all_coins_collected(const t_game_data *data)
 {
 	int	i;
 
