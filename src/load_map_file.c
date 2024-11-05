@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loading_map_file.c                                 :+:      :+:    :+:   */
+/*   load_map_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 14:44:26 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 15:40:42 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:56:20 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void	process_map(t_map *map)
 
 int	load_map(t_map *map, char *file_path)
 {
-	int			row;
-
-	row = 0;
 	map->path = file_path;
 	validate_file_extension(map);
 	process_map(map);

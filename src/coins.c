@@ -6,7 +6,7 @@
 /*   By: pwojnaro <pwojnaro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:24:23 by pwojnaro          #+#    #+#             */
-/*   Updated: 2024/09/16 17:52:13 by pwojnaro         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:56:45 by pwojnaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	check_coin_collection(t_game_data *data)
 {
 	t_character	*character;
 	t_coin		*coin;
-	t_exit		*exit_door;
 	int			i;
 
 	character = &data->character;
