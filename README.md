@@ -63,7 +63,7 @@ Example map:
 
 3. Run the game with a `.ber` map file as an argument:
 
-   ./so_long maps/example_map.ber
+   ./so_long test_maps/example_map.ber
 
 ## Controls
 - **Arrow Keys**: Move the player character
